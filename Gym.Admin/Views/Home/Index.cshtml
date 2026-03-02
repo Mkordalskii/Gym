@@ -1,8 +1,95 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Dashboard";
 }
+<section class="mb-4">
+    <div class="row g-3">
+        <div class="col-sm-6 col-xl-3">
+            <div class="card stat-card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Active Members</p>
+                    <h3 class="mb-0">482</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="card stat-card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Today's Check-ins</p>
+                    <h3 class="mb-0">146</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="card stat-card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Class Bookings</p>
+                    <h3 class="mb-0">79</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="card stat-card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Monthly Revenue</p>
+                    <h3 class="mb-0">72,300 PLN</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="row g-3">
+    <div class="col-xl-8">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h2 class="h6 mb-0">Upcoming Classes</h2>
+                <span class="badge text-bg-primary">Today</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Trainer</th>
+                            <th>Room</th>
+                            <th>Occupancy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Crossfit</td>
+                            <td>Name Surname</td>
+                            <td>A1</td>
+                            <td><span class="badge text-bg-success">18 / 20</span></td>
+                        </tr>
+                        <tr>
+                            <td>Yoga</td>
+                            <td>Name Surname2</td>
+                            <td>B3</td>
+                            <td><span class="badge text-bg-warning">12 / 15</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mobility</td>
+                            <td>Name Surname</td>
+                            <td>C2</td>
+                            <td><span class="badge text-bg-danger">10 / 10</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white">
+                <h2 class="h6 mb-0">Quick Actions</h2>
+            </div>
+            <div class="card-body d-grid gap-2">
+                <button class="btn btn-primary">Add Member</button>
+                <button class="btn btn-outline-primary">Create Membership Plan</button>
+                <button class="btn btn-outline-secondary">Post Announcement</button>
+                <button class="btn btn-outline-dark">Generate Report</button>
+            </div>
+        </div>
+    </div>
+</section>

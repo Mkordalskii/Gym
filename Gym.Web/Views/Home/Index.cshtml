@@ -1,8 +1,101 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Customer web";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="hero-section py-5">
+    <div class="container py-4">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+                <h1 class="display-5 fw-bold mb-3">Your fitness club</h1>
+                <p class="lead text-secondary mb-4">Check the schedule, manage your membership, and sign up for classes in seconds.</p>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="#grafik" class="btn btn-primary btn-lg px-4">Schedule</a>
+                    <a href="#karnety" class="btn btn-outline-primary btn-lg px-4">Browse memberships</a>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="card border-0 shadow-sm hero-card">
+                    <div class="card-body p-4">
+                        <h5 class="card-title mb-3">Upcoming Classes</h5>
+                        <ul class="list-group list-group-flush small">
+                            <li class="list-group-item d-flex justify-content-between px-0">
+                                <span>Yoga Flow</span><strong>18:00</strong>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between px-0">
+                                <span>Crossfit Intro</span><strong>19:30</strong>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between px-0">
+                                <span>Pilates Core</span><strong>20:15</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="dashboard" class="container my-5">
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-uppercase text-muted">Active membership</h6>
+                    <h4>Premium 30 days</h4>
+                    <p class="mb-0">Expires on: <strong>24.04.2026</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" id="grafik">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-uppercase text-muted">Upcoming booking</h6>
+                    <h4>HIIT Cardio</h4>
+                    <p class="mb-0">Tomorrow, 17:45 - Room B</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" id="aktualnosci">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-uppercase text-muted">Announcement</h6>
+                    <h4>Nowe zajęcia</h4>
+                    <p class="mb-0">New classes starting Monday</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="karnety" class="container my-5 pb-4">
+    <h2 class="mb-4">Memberships</h2>
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5>Basic</h5>
+                    <p class="text-muted">Perfect for begginers</p>
+                    <p class="display-6 fw-bold">129 PLN</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-primary shadow">
+                <div class="card-body">
+                    <h5>Standard</h5>
+                    <p class="text-muted">The most frequently chosen</p>
+                    <p class="display-6 fw-bold">169 PLN</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5>Premium</h5>
+                    <p class="text-muted">Full access + sauna</p>
+                    <p class="display-6 fw-bold">219 PLN</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

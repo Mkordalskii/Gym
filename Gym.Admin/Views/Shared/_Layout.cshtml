@@ -4,44 +4,38 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Gym.Admin</title>
-    <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Gym.Admin.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Gym.Admin</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+    <div class="admin-wrapper d-flex">
+        <aside class="admin-sidebar p-3 d-none d-lg-flex flex-column">
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="text-white text-decoration-none fs-4 fw-bold mb-4">Gym.Admin</a>
+            <nav class="nav nav-pills flex-column gap-2">
+                <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">Dashboard</a>
+                <a class="nav-link" href="#">Members</a> 
+                <a class="nav-link" href="#">Staff</a> 
+                <a class="nav-link" href="#">Class Schedule</a> 
+                <a class="nav-link" href="#">Payments</a> 
+                <a class="nav-link" href="#">Announcements</a>
+            </nav>
+            <div class="mt-auto small text-white-50">Role: Manager</div>
+        </aside>
+
+        <div class="admin-content flex-grow-1">
+            <header class="admin-topbar border-bottom bg-white">
+                <div class="container-fluid py-3 d-flex justify-content-between align-items-center">
+                    <h1 class="h5 mb-0">Internal Portal</h1> <a class="btn btn-outline-primary btn-sm" asp-area="" asp-controller="Home" asp-action="Privacy">Settings</a>
                 </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+            </header>
+
+            <main class="container-fluid py-4">
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Gym.Admin - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
