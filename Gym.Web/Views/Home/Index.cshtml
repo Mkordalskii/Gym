@@ -1,22 +1,34 @@
 ﻿@{
     ViewData["Title"] = "Customer web";
 }
-
 <section class="hero-section py-5">
     <div class="container py-4">
         <div class="row align-items-center g-4">
             <div class="col-lg-7">
-                <h1 class="display-5 fw-bold mb-3">Your fitness club</h1>
-                <p class="lead text-secondary mb-4">Check the schedule, manage your membership, and sign up for classes in seconds.</p>
+                <h1 class="display-5 fw-bold mb-3">Your fitness club portal</h1>
+                <p class="lead text-secondary mb-4">
+                    Manage your membership, browse the schedule, and book classes in seconds.
+                </p>
+
                 <div class="d-flex flex-wrap gap-2">
-                    <a href="#grafik" class="btn btn-primary btn-lg px-4">Schedule</a>
-                    <a href="#karnety" class="btn btn-outline-primary btn-lg px-4">Browse memberships</a>
+                    <a href="#grafik" class="btn btn-primary btn-lg px-4">View schedule</a>
+                    <a href="#karnety" class="btn btn-outline-primary btn-lg px-4">Membership plans</a>
+                    <a href="#dashboard" class="btn btn-outline-secondary btn-lg px-4">My dashboard</a>
                 </div>
+
+                <p class="text-muted mt-3 mb-0 small">
+                    Tip: booking requires an active membership.
+                </p>
             </div>
+
             <div class="col-lg-5">
                 <div class="card border-0 shadow-sm hero-card">
                     <div class="card-body p-4">
-                        <h5 class="card-title mb-3">Upcoming Classes</h5>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title mb-0">Next classes (today)</h5>
+                            <span class="badge text-bg-primary">Live</span>
+                        </div>
+
                         <ul class="list-group list-group-flush small">
                             <li class="list-group-item d-flex justify-content-between px-0">
                                 <span>Yoga Flow</span><strong>18:00</strong>
@@ -28,9 +40,14 @@
                                 <span>Pilates Core</span><strong>20:15</strong>
                             </li>
                         </ul>
+
+                        <div class="d-grid mt-3">
+                            <a href="#grafik" class="btn btn-primary btn-sm">Book a class</a>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
@@ -41,26 +58,42 @@
             <div class="card h-100 border-0 shadow-sm">
                 <div class="card-body">
                     <h6 class="text-uppercase text-muted">Active membership</h6>
-                    <h4>Premium 30 days</h4>
+                    <h4 class="mb-1">Premium 30 days</h4>
+                    <p class="mb-2">Status: <span class="badge text-bg-success">Active</span></p>
                     <p class="mb-0">Expires on: <strong>24.04.2026</strong></p>
+                    <p class="text-muted small mt-2 mb-0">Entity: Membership + MembershipPlan</p>
                 </div>
             </div>
         </div>
+
         <div class="col-md-4" id="grafik">
             <div class="card h-100 border-0 shadow-sm">
                 <div class="card-body">
                     <h6 class="text-uppercase text-muted">Upcoming booking</h6>
-                    <h4>HIIT Cardio</h4>
-                    <p class="mb-0">Tomorrow, 17:45 - Room B</p>
+                    <h4 class="mb-1">HIIT Cardio</h4>
+                    <p class="mb-2">
+                        <span class="badge text-bg-primary">Booked</span>
+                        <span class="text-muted"> • </span>
+                        <span>Tomorrow, 17:45</span>
+                    </p>
+                    <p class="mb-0">Room: <strong>B</strong> • Duration: <strong>45 min</strong></p>
+                    <p class="text-muted small mt-2 mb-0">Entity: Booking + FitnessClass</p>
                 </div>
             </div>
         </div>
+
         <div class="col-md-4" id="aktualnosci">
             <div class="card h-100 border-0 shadow-sm">
                 <div class="card-body">
-                    <h6 class="text-uppercase text-muted">Announcement</h6>
-                    <h4>Nowe zajęcia</h4>
-                    <p class="mb-0">New classes starting Monday</p>
+                    <h6 class="text-uppercase text-muted">Latest announcement</h6>
+                    <h4 class="mb-1">New classes added</h4>
+                    <p class="mb-2 text-muted">Starting Monday: Mobility & Stretching.</p>
+                    <p class="mb-0 small">
+                        Published: <strong>Today</strong>
+                        <span class="text-muted"> • </span>
+                        <span class="badge text-bg-secondary">Public</span>
+                    </p>
+                    <p class="text-muted small mt-2 mb-0">Entity: Announcement</p>
                 </div>
             </div>
         </div>
@@ -68,32 +101,59 @@
 </section>
 
 <section id="karnety" class="container my-5 pb-4">
-    <h2 class="mb-4">Memberships</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Membership plans</h2>
+        <span class="text-muted small">Entity: MembershipPlan</span>
+    </div>
+
     <div class="row g-3">
         <div class="col-md-4">
             <div class="card h-100 border-0 shadow-sm">
                 <div class="card-body">
-                    <h5>Basic</h5>
-                    <p class="text-muted">Perfect for begginers</p>
-                    <p class="display-6 fw-bold">129 PLN</p>
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h5 class="mb-1">Basic</h5>
+                        <span class="badge text-bg-light">30 days</span>
+                    </div>
+                    <p class="text-muted mb-3">Perfect for beginners</p>
+                    <p class="display-6 fw-bold mb-3">129 PLN</p>
+                    <div class="d-grid">
+                        <button class="btn btn-outline-primary">Choose plan</button>
+                    </div>
+                    <p class="text-muted small mt-2 mb-0">Later: creates Membership</p>
                 </div>
             </div>
         </div>
+
         <div class="col-md-4">
             <div class="card h-100 border-primary shadow">
                 <div class="card-body">
-                    <h5>Standard</h5>
-                    <p class="text-muted">The most frequently chosen</p>
-                    <p class="display-6 fw-bold">169 PLN</p>
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h5 class="mb-1">Standard</h5>
+                        <span class="badge text-bg-primary">Most popular</span>
+                    </div>
+                    <p class="text-muted mb-3">The most frequently chosen</p>
+                    <p class="display-6 fw-bold mb-3">169 PLN</p>
+                    <div class="d-grid">
+                        <button class="btn btn-primary">Choose plan</button>
+                    </div>
+                    <p class="text-muted small mt-2 mb-0">Later: creates Membership</p>
                 </div>
             </div>
         </div>
+
         <div class="col-md-4">
             <div class="card h-100 border-0 shadow-sm">
                 <div class="card-body">
-                    <h5>Premium</h5>
-                    <p class="text-muted">Full access + sauna</p>
-                    <p class="display-6 fw-bold">219 PLN</p>
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h5 class="mb-1">Premium</h5>
+                        <span class="badge text-bg-light">30 days</span>
+                    </div>
+                    <p class="text-muted mb-3">Full access + sauna</p>
+                    <p class="display-6 fw-bold mb-3">219 PLN</p>
+                    <div class="d-grid">
+                        <button class="btn btn-outline-primary">Choose plan</button>
+                    </div>
+                    <p class="text-muted small mt-2 mb-0">Later: creates Membership</p>
                 </div>
             </div>
         </div>
