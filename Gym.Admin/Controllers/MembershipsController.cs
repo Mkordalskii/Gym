@@ -63,6 +63,12 @@ namespace Gym.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                membership.IsActive = true;
+                membership.CreatedAt = DateTime.UtcNow;
+                membership.CreatedBy = User.Identity?.Name ?? "Admin";
+                membership.ModifiedBy = User.Identity?.Name ?? "Admin";
+                membership.ModifiedAt = DateTime.UtcNow;
+
                 _context.Add(membership);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -85,6 +91,8 @@ namespace Gym.Admin.Controllers
             {
                 return NotFound();
             }
+            membership.ModifiedBy = User.Identity?.Name ?? "Admin";
+            membership.ModifiedAt = DateTime.UtcNow;
             ViewData["MemberId"] = new SelectList(_context.Member, "Id", "Email", membership.MemberId);
             ViewData["MembershipPlanId"] = new SelectList(_context.Set<MembershipPlan>(), "Id", "Name", membership.MembershipPlanId);
             return View(membership);
@@ -106,6 +114,9 @@ namespace Gym.Admin.Controllers
             {
                 try
                 {
+                    membership.ModifiedBy = User.Identity?.Name ?? "Admin";
+                    membership.ModifiedAt = DateTime.UtcNow;
+
                     _context.Update(membership);
                     await _context.SaveChangesAsync();
                 }

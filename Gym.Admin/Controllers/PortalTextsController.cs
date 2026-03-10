@@ -58,6 +58,12 @@ namespace Gym.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                portalText.IsActive = true;
+                portalText.CreatedAt = DateTime.UtcNow;
+                portalText.CreatedBy = User.Identity?.Name ?? "Admin";
+                portalText.ModifiedBy = User.Identity?.Name ?? "Admin";
+                portalText.ModifiedAt = DateTime.UtcNow;
+
                 _context.Add(portalText);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -78,6 +84,8 @@ namespace Gym.Admin.Controllers
             {
                 return NotFound();
             }
+            portalText.ModifiedBy = User.Identity?.Name ?? "Admin";
+            portalText.ModifiedAt = DateTime.UtcNow;
             return View(portalText);
         }
 
@@ -97,6 +105,9 @@ namespace Gym.Admin.Controllers
             {
                 try
                 {
+                    portalText.ModifiedBy = User.Identity?.Name ?? "Admin";
+                    portalText.ModifiedAt = DateTime.UtcNow;
+
                     _context.Update(portalText);
                     await _context.SaveChangesAsync();
                 }

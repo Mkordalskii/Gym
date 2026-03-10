@@ -63,6 +63,12 @@ namespace Gym.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                booking.IsActive = true;
+                booking.CreatedAt = DateTime.UtcNow;
+                booking.CreatedBy = User.Identity?.Name ?? "Admin";
+                booking.ModifiedBy = User.Identity?.Name ?? "Admin";
+                booking.ModifiedAt = DateTime.UtcNow;
+
                 _context.Add(booking);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -85,6 +91,9 @@ namespace Gym.Admin.Controllers
             {
                 return NotFound();
             }
+            booking.ModifiedBy = User.Identity?.Name ?? "Admin";
+            booking.ModifiedAt = DateTime.UtcNow;
+
             ViewData["FitnessClassId"] = new SelectList(_context.Set<FitnessClass>(), "Id", "Room", booking.FitnessClassId);
             ViewData["MemberId"] = new SelectList(_context.Set<Member>(), "Id", "Email", booking.MemberId);
             return View(booking);
@@ -106,6 +115,9 @@ namespace Gym.Admin.Controllers
             {
                 try
                 {
+                    booking.ModifiedBy = User.Identity?.Name ?? "Admin";
+                    booking.ModifiedAt = DateTime.UtcNow;
+
                     _context.Update(booking);
                     await _context.SaveChangesAsync();
                 }
@@ -144,6 +156,8 @@ namespace Gym.Admin.Controllers
                 return NotFound();
             }
 
+            booking.DeletedAt = DateTime.UtcNow;
+            booking.DeletedBy = User.Identity?.Name ?? "Admin";
             return View(booking);
         }
 

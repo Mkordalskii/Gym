@@ -58,6 +58,12 @@ namespace Gym.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                membershipPlan.IsActive = true;
+                membershipPlan.CreatedAt = DateTime.UtcNow;
+                membershipPlan.CreatedBy = User.Identity?.Name ?? "Admin";
+                membershipPlan.ModifiedBy = User.Identity?.Name ?? "Admin";
+                membershipPlan.ModifiedAt = DateTime.UtcNow;
+
                 _context.Add(membershipPlan);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -78,6 +84,8 @@ namespace Gym.Admin.Controllers
             {
                 return NotFound();
             }
+            membershipPlan.ModifiedBy = User.Identity?.Name ?? "Admin";
+            membershipPlan.ModifiedAt = DateTime.UtcNow;
             return View(membershipPlan);
         }
 
@@ -97,6 +105,9 @@ namespace Gym.Admin.Controllers
             {
                 try
                 {
+                    membershipPlan.ModifiedBy = User.Identity?.Name ?? "Admin";
+                    membershipPlan.ModifiedAt = DateTime.UtcNow;
+
                     _context.Update(membershipPlan);
                     await _context.SaveChangesAsync();
                 }
