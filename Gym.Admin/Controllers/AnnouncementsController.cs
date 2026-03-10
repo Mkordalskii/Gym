@@ -58,6 +58,12 @@ namespace Gym.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                announcement.IsActive = true;
+                announcement.CreatedAt = DateTime.UtcNow;
+                announcement.CreatedBy = User.Identity?.Name ?? "Admin";
+                announcement.ModifiedBy = User.Identity?.Name ?? "Admin";
+                announcement.ModifiedAt = DateTime.UtcNow;
+
                 _context.Add(announcement);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -78,6 +84,8 @@ namespace Gym.Admin.Controllers
             {
                 return NotFound();
             }
+            announcement.ModifiedBy = User.Identity?.Name ?? "Admin";
+            announcement.ModifiedAt = DateTime.UtcNow;
             return View(announcement);
         }
 
@@ -130,7 +138,8 @@ namespace Gym.Admin.Controllers
             {
                 return NotFound();
             }
-
+            announcement.DeletedAt = DateTime.UtcNow;
+            announcement.DeletedBy = User.Identity?.Name ?? "Admin";
             return View(announcement);
         }
 
