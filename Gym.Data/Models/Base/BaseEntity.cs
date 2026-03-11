@@ -16,7 +16,7 @@ namespace Gym.Data.Models.Base
         [Required]
         public DateTime CreatedAt { get; set; }
         [MaxLength(100)]
-        public DateTime? ModifiedBy { get; set; }
+        public string? ModifiedBy { get; set; }
         public DateTime? ModifiedAt { get; set; }
         [MaxLength(100)]
         public string? DeletedBy { get; set; }

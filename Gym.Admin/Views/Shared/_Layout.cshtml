@@ -11,22 +11,38 @@
 <body>
     <div class="admin-wrapper d-flex">
         <aside class="admin-sidebar p-3 d-none d-lg-flex flex-column">
-            <a asp-area="" asp-controller="Home" asp-action="Index" class="text-white text-decoration-none fs-4 fw-bold mb-4">Gym.Admin</a>
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="text-white text-decoration-none fs-4 fw-bold mb-4">
+                Gym.Admin
+            </a>
+
             <nav class="nav nav-pills flex-column gap-2">
-                <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">Dashboard</a>
-                <a class="nav-link" href="#">Members</a> 
-                <a class="nav-link" href="#">Staff</a> 
-                <a class="nav-link" href="#">Class Schedule</a> 
-                <a class="nav-link" href="#">Payments</a> 
-                <a class="nav-link" href="#">Announcements</a>
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Dashboard</a>
+
+                <div class="text-white-50 small text-uppercase mt-3 mb-1">Core</div>
+
+                <a class="nav-link" asp-area="" asp-controller="Members" asp-action="Index">Members</a>
+                <a class="nav-link" asp-area="" asp-controller="MembershipPlans" asp-action="Index">Membership Plans</a>
+                <a class="nav-link" asp-area="" asp-controller="Memberships" asp-action="Index">Memberships</a>
+                <a class="nav-link" asp-area="" asp-controller="FitnessClasses" asp-action="Index">Fitness Classes</a>
+                <a class="nav-link" asp-area="" asp-controller="Bookings" asp-action="Index">Bookings</a>
+                <a class="nav-link" asp-area="" asp-controller="Announcements" asp-action="Index">Announcements</a>
+
+                <div class="text-white-50 small text-uppercase mt-3 mb-1">CMS</div>
+
+                <a class="nav-link" asp-area="" asp-controller="PortalTexts" asp-action="Index">Portal Texts</a>
+                <a class="nav-link" asp-area="" asp-controller="PortalPages" asp-action="Index">Portal Pages</a>
             </nav>
-            <div class="mt-auto small text-white-50">Role: Manager</div>
+
+            <div class="mt-auto small text-white-50">
+                Role: Manager
+            </div>
         </aside>
 
         <div class="admin-content flex-grow-1">
             <header class="admin-topbar border-bottom bg-white">
                 <div class="container-fluid py-3 d-flex justify-content-between align-items-center">
-                    <h1 class="h5 mb-0">Internal Portal</h1> <a class="btn btn-outline-primary btn-sm" asp-area="" asp-controller="Home" asp-action="Privacy">Settings</a>
+                    <h1 class="h5 mb-0">Internal Portal</h1>
+                    <a class="btn btn-outline-primary btn-sm" asp-area="" asp-controller="Home" asp-action="Privacy">Settings</a>
                 </div>
             </header>
 
