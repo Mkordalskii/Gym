@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<Gym.Data.Models.Cms.PortalPage>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Portal pages";
 }
 
-<h1>Index</h1>
+<h1>Portal pages</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a type="button" class="btn btn-primary" asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -85,9 +85,11 @@
                 @Html.DisplayFor(modelItem => item.DeletedAt)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <div class="d-grid">
+                        <a type="button" class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a type="button" class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a type="button" class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </div>
             </td>
         </tr>
 }

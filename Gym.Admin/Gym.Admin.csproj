@@ -4,6 +4,9 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+	<DisableNET60Check>true</DisableNET60Check>
+  <UseAppHost>false</UseAppHost>
   </PropertyGroup>
 
   <ItemGroup>
