@@ -12,9 +12,11 @@ namespace Gym.Data.Models.Core
         [MaxLength(100)]
         public required string Title { get; set; }
         [Required]
+        [Display(Name = "Start Time")]
         public DateTime StartTime { get; set; }
         [Required]
         [Range(15, 240)]
+        [Display(Name = "Duration (minutes)")]
         public int DurationInMinutes { get; set; }
         [Required]
         [MaxLength(20)]

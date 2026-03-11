@@ -14,6 +14,7 @@ namespace Gym.Data.Models.Core
         public required string Name { get; set; }
         [Required]
         [Range(1,3650)]
+        [Display(Name = "Duration (days)")]
         public int DurationInDays { get; set; }
         [Required]
         [Column(TypeName = "decimal(10,2)")]

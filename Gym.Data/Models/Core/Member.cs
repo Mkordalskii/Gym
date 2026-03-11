@@ -10,9 +10,11 @@ namespace Gym.Data.Models.Core
     {
         [Required(ErrorMessage = "First name is required")]
         [MaxLength(50)]
+        [Display(Name = "First Name")]
         public required string FirstName { get; set; }
         [Required(ErrorMessage = "Last name is required")]
         [MaxLength(50)]
+        [Display(Name = "Last Name")]
         public required string LastName { get; set; }
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid email format")]
@@ -20,9 +22,11 @@ namespace Gym.Data.Models.Core
         public required string Email { get; set; }
         [Phone(ErrorMessage = "Invalid phone number format")]
         [MaxLength(20)]
+        [Display(Name = "Phone Number")]
         public string? PhoneNumber { get; set; }
         [Required(ErrorMessage = "Date of birth is required")]
         [DataType(DataType.Date, ErrorMessage = "Invalid date format")]
+        [Display(Name = "Date of Birth")]
         public DateTime DateOfBirth { get; set; }
         public ICollection<Membership>? Memberships { get; set; } = new List<Membership>();
         public ICollection<Booking>? Bookings { get; set; } = new List<Booking>();

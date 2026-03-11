@@ -14,7 +14,9 @@ namespace Gym.Data.Models.Core
         [Required(ErrorMessage = "Announcement content is required")]
         public required string Content { get; set; }
         [Required]
+        [Display(Name = "Publish From")]
         public DateTime PublishFrom { get; set; } // When the announcement should start being visible
+        [Display(Name = "Publish To")]
         public DateTime? PublishTo { get; set; } // Optional end date for the announcement visibility
     }
 }
