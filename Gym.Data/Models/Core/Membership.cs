@@ -16,12 +16,15 @@ namespace Gym.Data.Models.Core
         [Required]
         public int MembershipPlanId { get; set; }
         [ForeignKey(nameof(MembershipPlanId))]
+        [Display(Name = "Membership Plan")]
         public MembershipPlan? MembershipPlan { get; set; }
         [Required]
         [DataType(DataType.Date)]
+        [Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
         [Required]
         [DataType(DataType.Date)]
+        [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }
         [Required]
         [MaxLength(30)]

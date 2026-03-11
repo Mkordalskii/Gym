@@ -14,8 +14,10 @@ namespace Gym.Data.Models.Core
         [ForeignKey(nameof(MemberId))]
         public Member? Member { get; set; }
         [Required]
+        [Display(Name = "Fitness Class")]
         public int FitnessClassId { get; set; }
         [ForeignKey(nameof(FitnessClassId))]
+        [Display(Name = "Fitness Class")]
         public FitnessClass? FitnessClass { get; set; }
         [Required]
         [MaxLength(30)]
