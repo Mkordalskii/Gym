@@ -1,1 +1,15 @@
 ﻿@model IEnumerable<Gym.Data.Models.Cms.PortalPage>
+<div class="collapse navbar-collapse" id="webNavbar">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Start</a>
+        </li>
+        @foreach (var item in Model)
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index" asp-route-slug="@item.Slug">@item.Title</a>
+            </li>
+        }
+    </ul>
+    <a class="btn btn-light btn-sm px-3" href="#dashboard">My dashboard</a>
+</div>
