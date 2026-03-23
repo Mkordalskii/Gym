@@ -1,9 +1,18 @@
+using Gym.Data.Data;
+using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<GymContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("GymContext") ?? throw new InvalidOperationException("Connection string 'GymContext' not found.")));
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{slug?}");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

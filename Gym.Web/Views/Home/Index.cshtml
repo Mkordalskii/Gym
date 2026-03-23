@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Gym.Data.Models.Cms.PortalPage
+@{
     ViewData["Title"] = "Customer web";
 }
 <section class="hero-section py-5">
@@ -81,22 +82,7 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-md-4" id="aktualnosci">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body">
-                    <h6 class="text-uppercase text-muted">Latest announcement</h6>
-                    <h4 class="mb-1">New classes added</h4>
-                    <p class="mb-2 text-muted">Starting Monday: Mobility & Stretching.</p>
-                    <p class="mb-0 small">
-                        Published: <strong>Today</strong>
-                        <span class="text-muted"> • </span>
-                        <span class="badge text-bg-secondary">Public</span>
-                    </p>
-                    <p class="text-muted small mt-2 mb-0">Entity: Announcement</p>
-                </div>
-            </div>
-        </div>
+		@await Html.PartialAsync("AnnouncementsHomePage", (Gym.Data.Models.Core.Announcement)ViewBag.Announcement) @* wstawia zawartość z AnnouncementsHomePage.cshtml, który pokazuje najnowsze ogłoszenie *@
     </div>
 </section>
 

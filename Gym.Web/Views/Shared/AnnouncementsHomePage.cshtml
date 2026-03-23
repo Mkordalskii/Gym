@@ -1,0 +1,16 @@
+﻿@model Gym.Data.Models.Core.Announcement
+<div class="col-md-4" id="aktualnosci">
+<div class="card h-100 border-0 shadow-sm">
+    <div class="card-body">
+        <h6 class="text-uppercase text-muted">Latest announcement</h6>
+        <h4 class="mb-1">@Model.Title</h4>
+        <p class="mb-2 text-muted">@Model.Content</p>
+        <p class="mb-0 small">
+            Published: <strong>@Model.CreatedAt.ToString()</strong>
+            <span class="text-muted"> • </span>
+            <span class="badge text-bg-secondary">Public</span>
+        </p>
+        <p class="text-muted small mt-2 mb-0">Entity: Announcement</p>
+    </div>
+</div>
+</div>
