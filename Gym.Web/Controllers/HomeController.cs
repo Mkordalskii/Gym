@@ -23,6 +23,10 @@ namespace Gym.Web.Controllers
                 .ToListAsync();
 
             ViewBag.PageModel = pages;
+            ViewBag.Announcement = await _context.Announcement
+                .Where(a => a.IsActive)
+                .OrderByDescending(a => a.Id)
+                .FirstOrDefaultAsync();
 
             if (string.IsNullOrEmpty(slug))
             {
