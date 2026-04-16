@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 using Gym.Data.Models.Base;
 
 namespace Gym.Data.Models.Cms
 {
+    // Represents a page in the gym's portal, allowing for dynamic content management
     public class PortalPage : BaseEntity
     {
         [Required]

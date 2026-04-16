@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 using Gym.Data.Models.Base;
 
 namespace Gym.Data.Models.Cms
 {
+    //class to store key-value pairs for portal text, allowing for easy updates and localization
     public class PortalText : BaseEntity
     {
         [Required]
