@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Gym.Data.Data;
+using Gym.Data.Models.Cms;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Gym.Data.Data;
-using Gym.Data.Models.Cms;
 
 namespace Gym.Admin.Controllers
 {
@@ -61,6 +57,12 @@ namespace Gym.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                parameter.IsActive = true;
+                parameter.CreatedAt = DateTime.UtcNow;
+                parameter.CreatedBy = User.Identity?.Name ?? "Admin";
+                parameter.ModifiedBy = User.Identity?.Name ?? "Admin";
+                parameter.ModifiedAt = DateTime.UtcNow;
+
                 _context.Add(parameter);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
