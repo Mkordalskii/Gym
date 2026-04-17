@@ -59,7 +59,7 @@ namespace Gym.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MemberId,FitnessClassId,Status,Id,IsActive,CreatedBy,CreatedAt,ModifiedBy,ModifiedAt,DeletedBy,DeletedAt")] Booking booking)
+        public async Task<IActionResult> Create([Bind("MemberId,FitnessClassId,Status")] Booking booking)
         {
             if (ModelState.IsValid)
             {
@@ -104,7 +104,7 @@ namespace Gym.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MemberId,FitnessClassId,Status,Id,IsActive,CreatedBy,CreatedAt,ModifiedBy,ModifiedAt,DeletedBy,DeletedAt")] Booking booking)
+        public async Task<IActionResult> Edit(int id, [Bind("MemberId,FitnessClassId,Status,Id,IsActive")] Booking booking)
         {
             if (id != booking.Id)
             {
@@ -115,6 +115,16 @@ namespace Gym.Admin.Controllers
             {
                 try
                 {
+                    var existingBooking = await _context.Booking.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
+                    if (existingBooking == null)
+                    {
+                        return NotFound();
+                    }
+
+                    booking.CreatedBy = existingBooking.CreatedBy;
+                    booking.CreatedAt = existingBooking.CreatedAt;
+                    booking.DeletedBy = existingBooking.DeletedBy;
+                    booking.DeletedAt = existingBooking.DeletedAt;
                     booking.ModifiedBy = User.Identity?.Name ?? "Admin";
                     booking.ModifiedAt = DateTime.UtcNow;
 

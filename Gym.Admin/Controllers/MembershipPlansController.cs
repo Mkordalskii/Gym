@@ -54,7 +54,7 @@ namespace Gym.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,DurationInDays,Price,Id,IsActive,CreatedBy,CreatedAt,ModifiedBy,ModifiedAt,DeletedBy,DeletedAt")] MembershipPlan membershipPlan)
+        public async Task<IActionResult> Create([Bind("Name,DurationInDays,Price")] MembershipPlan membershipPlan)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace Gym.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,DurationInDays,Price,Id,IsActive,CreatedBy,CreatedAt,ModifiedBy,ModifiedAt,DeletedBy,DeletedAt")] MembershipPlan membershipPlan)
+        public async Task<IActionResult> Edit(int id, [Bind("Name,DurationInDays,Price,Id,IsActive")] MembershipPlan membershipPlan)
         {
             if (id != membershipPlan.Id)
             {
@@ -105,6 +105,16 @@ namespace Gym.Admin.Controllers
             {
                 try
                 {
+                    var existingMembershipPlan = await _context.MembershipPlan.AsNoTracking().FirstOrDefaultAsync(mp => mp.Id == id);
+                    if (existingMembershipPlan == null)
+                    {
+                        return NotFound();
+                    }
+
+                    membershipPlan.CreatedBy = existingMembershipPlan.CreatedBy;
+                    membershipPlan.CreatedAt = existingMembershipPlan.CreatedAt;
+                    membershipPlan.DeletedBy = existingMembershipPlan.DeletedBy;
+                    membershipPlan.DeletedAt = existingMembershipPlan.DeletedAt;
                     membershipPlan.ModifiedBy = User.Identity?.Name ?? "Admin";
                     membershipPlan.ModifiedAt = DateTime.UtcNow;
 

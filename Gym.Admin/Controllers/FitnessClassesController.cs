@@ -54,7 +54,7 @@ namespace Gym.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,StartTime,DurationInMinutes,Room,Capacity,Id,IsActive,CreatedBy,CreatedAt,ModifiedBy,ModifiedAt,DeletedBy,DeletedAt")] FitnessClass fitnessClass)
+        public async Task<IActionResult> Create([Bind("Title,StartTime,DurationInMinutes,Room,Capacity")] FitnessClass fitnessClass)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace Gym.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Title,StartTime,DurationInMinutes,Room,Capacity,Id,IsActive,CreatedBy,CreatedAt,ModifiedBy,ModifiedAt,DeletedBy,DeletedAt")] FitnessClass fitnessClass)
+        public async Task<IActionResult> Edit(int id, [Bind("Title,StartTime,DurationInMinutes,Room,Capacity,Id,IsActive")] FitnessClass fitnessClass)
         {
             if (id != fitnessClass.Id)
             {
@@ -105,6 +105,16 @@ namespace Gym.Admin.Controllers
             {
                 try
                 {
+                    var existingFitnessClass = await _context.FitnessClass.AsNoTracking().FirstOrDefaultAsync(fc => fc.Id == id);
+                    if (existingFitnessClass == null)
+                    {
+                        return NotFound();
+                    }
+
+                    fitnessClass.CreatedBy = existingFitnessClass.CreatedBy;
+                    fitnessClass.CreatedAt = existingFitnessClass.CreatedAt;
+                    fitnessClass.DeletedBy = existingFitnessClass.DeletedBy;
+                    fitnessClass.DeletedAt = existingFitnessClass.DeletedAt;
                     fitnessClass.ModifiedBy = User.Identity?.Name ?? "Admin";
                     fitnessClass.ModifiedAt = DateTime.UtcNow;
 

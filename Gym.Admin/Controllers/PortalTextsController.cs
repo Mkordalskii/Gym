@@ -54,7 +54,7 @@ namespace Gym.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Key,Value,Language,Id,IsActive,CreatedBy,CreatedAt,ModifiedBy,ModifiedAt,DeletedBy,DeletedAt")] PortalText portalText)
+        public async Task<IActionResult> Create([Bind("Key,Value,Language")] PortalText portalText)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace Gym.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Key,Value,Language,Id,IsActive,CreatedBy,CreatedAt,ModifiedBy,ModifiedAt,DeletedBy,DeletedAt")] PortalText portalText)
+        public async Task<IActionResult> Edit(int id, [Bind("Key,Value,Language,Id,IsActive")] PortalText portalText)
         {
             if (id != portalText.Id)
             {
@@ -105,6 +105,16 @@ namespace Gym.Admin.Controllers
             {
                 try
                 {
+                    var existingPortalText = await _context.PortalText.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+                    if (existingPortalText == null)
+                    {
+                        return NotFound();
+                    }
+
+                    portalText.CreatedBy = existingPortalText.CreatedBy;
+                    portalText.CreatedAt = existingPortalText.CreatedAt;
+                    portalText.DeletedBy = existingPortalText.DeletedBy;
+                    portalText.DeletedAt = existingPortalText.DeletedAt;
                     portalText.ModifiedBy = User.Identity?.Name ?? "Admin";
                     portalText.ModifiedAt = DateTime.UtcNow;
 

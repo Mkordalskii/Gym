@@ -53,7 +53,7 @@ namespace Gym.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Value,Description,ParameterCategoryId,Id,IsActive,CreatedBy,CreatedAt,ModifiedBy,ModifiedAt,DeletedBy,DeletedAt")] Parameter parameter)
+        public async Task<IActionResult> Create([Bind("Name,Value,Description,ParameterCategoryId")] Parameter parameter)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace Gym.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,Value,Description,ParameterCategoryId,Id,IsActive,CreatedBy,CreatedAt,ModifiedBy,ModifiedAt,DeletedBy,DeletedAt")] Parameter parameter)
+        public async Task<IActionResult> Edit(int id, [Bind("Name,Value,Description,ParameterCategoryId,Id,IsActive")] Parameter parameter)
         {
             if (id != parameter.Id)
             {
@@ -104,6 +104,18 @@ namespace Gym.Admin.Controllers
             {
                 try
                 {
+                    var existingParameter = await _context.Parameter.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+                    if (existingParameter == null)
+                    {
+                        return NotFound();
+                    }
+
+                    parameter.CreatedBy = existingParameter.CreatedBy;
+                    parameter.CreatedAt = existingParameter.CreatedAt;
+                    parameter.ModifiedBy = User.Identity?.Name ?? "Admin";
+                    parameter.ModifiedAt = DateTime.UtcNow;
+                    parameter.DeletedBy = existingParameter.DeletedBy;
+                    parameter.DeletedAt = existingParameter.DeletedAt;
                     _context.Update(parameter);
                     await _context.SaveChangesAsync();
                 }

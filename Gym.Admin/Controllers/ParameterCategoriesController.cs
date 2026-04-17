@@ -49,7 +49,7 @@ namespace Gym.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Description,Id,IsActive,CreatedBy,CreatedAt,ModifiedBy,ModifiedAt,DeletedBy,DeletedAt")] ParameterCategory parameterCategory)
+        public async Task<IActionResult> Create([Bind("Name,Description")] ParameterCategory parameterCategory)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace Gym.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,Description,Id,IsActive,CreatedBy,CreatedAt,ModifiedBy,ModifiedAt,DeletedBy,DeletedAt")] ParameterCategory parameterCategory)
+        public async Task<IActionResult> Edit(int id, [Bind("Name,Description,Id,IsActive")] ParameterCategory parameterCategory)
         {
             if (id != parameterCategory.Id)
             {
@@ -98,6 +98,18 @@ namespace Gym.Admin.Controllers
             {
                 try
                 {
+                    var existingParameterCategory = await _context.ParameterCategory.AsNoTracking().FirstOrDefaultAsync(pc => pc.Id == id);
+                    if (existingParameterCategory == null)
+                    {
+                        return NotFound();
+                    }
+
+                    parameterCategory.CreatedBy = existingParameterCategory.CreatedBy;
+                    parameterCategory.CreatedAt = existingParameterCategory.CreatedAt;
+                    parameterCategory.ModifiedBy = User.Identity?.Name ?? "Admin";
+                    parameterCategory.ModifiedAt = DateTime.UtcNow;
+                    parameterCategory.DeletedBy = existingParameterCategory.DeletedBy;
+                    parameterCategory.DeletedAt = existingParameterCategory.DeletedAt;
                     _context.Update(parameterCategory);
                     await _context.SaveChangesAsync();
                 }

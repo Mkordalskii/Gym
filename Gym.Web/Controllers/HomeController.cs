@@ -23,10 +23,15 @@ namespace Gym.Web.Controllers
                 .ToListAsync();
 
             ViewBag.PageModel = pages;
-            ViewBag.Announcement = await _context.Announcement
+            ViewBag.Announcements = await _context.Announcement
                 .Where(a => a.IsActive)
                 .OrderByDescending(a => a.Id)
-                .FirstOrDefaultAsync();
+                .ToListAsync();
+            ViewBag.MembershipPlans = await _context.MembershipPlan
+                .Where(mp => mp.IsActive)
+                .OrderBy(mp => mp.Price)
+                .ToListAsync();
+            await LoadParametersAsync();
 
             if (string.IsNullOrEmpty(slug))
             {
@@ -43,8 +48,9 @@ namespace Gym.Web.Controllers
             return View(item);
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Privacy()
         {
+            await LoadParametersAsync();
             return View();
         }
 
@@ -52,6 +58,13 @@ namespace Gym.Web.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private async Task LoadParametersAsync()
+        {
+            ViewBag.Parameters = await _context.Parameter
+                .Where(p => p.IsActive)
+                .ToDictionaryAsync(p => p.Name, p => p.Value);
         }
     }
 }

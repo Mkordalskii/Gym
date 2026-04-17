@@ -54,7 +54,7 @@ namespace Gym.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Content,PublishFrom,PublishTo,Id,IsActive,CreatedBy,CreatedAt,ModifiedBy,ModifiedAt,DeletedBy,DeletedAt")] Announcement announcement)
+        public async Task<IActionResult> Create([Bind("Title,Content,PublishFrom,PublishTo")] Announcement announcement)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace Gym.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Title,Content,PublishFrom,PublishTo,Id,IsActive,CreatedBy,CreatedAt,ModifiedBy,ModifiedAt,DeletedBy,DeletedAt")] Announcement announcement)
+        public async Task<IActionResult> Edit(int id, [Bind("Title,Content,PublishFrom,PublishTo,Id,IsActive")] Announcement announcement)
         {
             if (id != announcement.Id)
             {
@@ -105,6 +105,16 @@ namespace Gym.Admin.Controllers
             {
                 try
                 {
+                    var existingAnnouncement = await _context.Announcement.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
+                    if (existingAnnouncement == null)
+                    {
+                        return NotFound();
+                    }
+
+                    announcement.CreatedBy = existingAnnouncement.CreatedBy;
+                    announcement.CreatedAt = existingAnnouncement.CreatedAt;
+                    announcement.DeletedBy = existingAnnouncement.DeletedBy;
+                    announcement.DeletedAt = existingAnnouncement.DeletedAt;
                     _context.Update(announcement);
                     await _context.SaveChangesAsync();
                 }

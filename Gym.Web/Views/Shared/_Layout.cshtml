@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="~/Gym.Web.styles.css" asp-append-version="true" />
 </head>
 <body>
+    @{
+        var parameters = ViewBag.Parameters as IDictionary<string, string> ?? new Dictionary<string, string>();
+        string Txt(string key) => parameters.TryGetValue(key, out var value) && !string.IsNullOrWhiteSpace(value) ? value : $"[{key}]";
+    }
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark web-navbar shadow-sm"> @* navbar-expand navbar sie rozwija lub zwija do hamburgera *@
             <div class="container"> @* responsywny kontener *@
@@ -27,8 +31,8 @@
 
     <footer class="web-footer py-4 mt-5 border-top">
         <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
-            <small class="text-muted">&copy; 2026 Gym.Web - Customer Web Portal</small>
-            <a class="text-decoration-none small" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy policy</a>
+            <small class="text-muted">&copy; @Txt("Footer.Copyright")</small>
+            <a class="text-decoration-none small" asp-area="" asp-controller="Home" asp-action="Privacy">@Txt("Footer.PrivacyPolicy")</a>
         </div>
     </footer>
 

@@ -54,7 +54,7 @@ namespace Gym.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Slug,Title,Content,IsPublished,Id,IsActive,CreatedBy,CreatedAt,ModifiedBy,ModifiedAt,DeletedBy,DeletedAt")] PortalPage portalPage)
+        public async Task<IActionResult> Create([Bind("Slug,Title,Content,IsPublished")] PortalPage portalPage)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace Gym.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Slug,Title,Content,IsPublished,Id,IsActive,CreatedBy,CreatedAt,ModifiedBy,ModifiedAt,DeletedBy,DeletedAt")] PortalPage portalPage)
+        public async Task<IActionResult> Edit(int id, [Bind("Slug,Title,Content,IsPublished,Id,IsActive")] PortalPage portalPage)
         {
             if (id != portalPage.Id)
             {
@@ -105,6 +105,16 @@ namespace Gym.Admin.Controllers
             {
                 try
                 {
+                    var existingPortalPage = await _context.PortalPage.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+                    if (existingPortalPage == null)
+                    {
+                        return NotFound();
+                    }
+
+                    portalPage.CreatedBy = existingPortalPage.CreatedBy;
+                    portalPage.CreatedAt = existingPortalPage.CreatedAt;
+                    portalPage.DeletedBy = existingPortalPage.DeletedBy;
+                    portalPage.DeletedAt = existingPortalPage.DeletedAt;
                     portalPage.ModifiedBy = User.Identity?.Name ?? "Admin";
                     portalPage.ModifiedAt = DateTime.UtcNow;
 

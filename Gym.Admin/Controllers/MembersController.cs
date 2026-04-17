@@ -54,7 +54,7 @@ namespace Gym.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FirstName,LastName,Email,PhoneNumber,DateOfBirth,Id,IsActive,CreatedBy,CreatedAt,ModifiedBy,ModifiedAt,DeletedBy,DeletedAt")] Member member)
+        public async Task<IActionResult> Create([Bind("FirstName,LastName,Email,PhoneNumber,DateOfBirth")] Member member)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace Gym.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FirstName,LastName,Email,PhoneNumber,DateOfBirth,Id,IsActive,CreatedBy,CreatedAt,ModifiedBy,ModifiedAt,DeletedBy,DeletedAt")] Member member)
+        public async Task<IActionResult> Edit(int id, [Bind("FirstName,LastName,Email,PhoneNumber,DateOfBirth,Id,IsActive")] Member member)
         {
             if (id != member.Id)
             {
@@ -105,6 +105,16 @@ namespace Gym.Admin.Controllers
             {
                 try
                 {
+                    var existingMember = await _context.Member.AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
+                    if (existingMember == null)
+                    {
+                        return NotFound();
+                    }
+
+                    member.CreatedBy = existingMember.CreatedBy;
+                    member.CreatedAt = existingMember.CreatedAt;
+                    member.DeletedBy = existingMember.DeletedBy;
+                    member.DeletedAt = existingMember.DeletedAt;
                     member.ModifiedBy = User.Identity?.Name ?? "Admin";
                     member.ModifiedAt = DateTime.UtcNow;
 
