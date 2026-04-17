@@ -51,6 +51,10 @@ namespace Gym.Web.Controllers
         public async Task<IActionResult> Privacy()
         {
             await LoadParametersAsync();
+            ViewBag.PageModel = await _context.PortalPage
+                .Where(p => p.IsPublished)
+                .OrderBy(p => p.Id)
+                .ToListAsync();
             return View();
         }
 
