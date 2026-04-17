@@ -23,7 +23,7 @@
 
                 <div class="d-flex flex-wrap gap-2">
                     <a href="#grafik" class="btn btn-primary btn-lg px-4">@GetText("Home.HeroPrimaryButton", "View schedule")</a>
-                    <a href="#karnety" class="btn btn-outline-primary btn-lg px-4">@GetText("Home.HeroSecondaryButton", "Membership plans")</a>
+                    <a asp-controller="MembershipPlans" asp-action="Index" class="btn btn-outline-primary btn-lg px-4">@GetText("Home.HeroSecondaryButton", "Membership plans")</a>
                     <a href="#dashboard" class="btn btn-outline-secondary btn-lg px-4">@GetText("Home.HeroTertiaryButton", "My dashboard")</a>
                 </div>
 
@@ -120,7 +120,7 @@
                             <p class="text-muted mb-3">@GetText($"Home.Plan.{plan.Name}.Description", GetText("Home.PlanDefaultDescription", "Membership plan"))</p>
                             <p class="display-6 fw-bold mb-3">@($"{plan.Price:0.##} PLN")</p>
                             <div class="d-grid">
-                                <button class="btn btn-outline-primary">@GetText("Home.PlanChooseButton", "Choose plan")</button>
+                                <a asp-controller="MembershipPlans" asp-action="Index" class="btn btn-outline-primary">@GetText("Home.PlanChooseButton", "Choose plan")</a>
                             </div>
                             <p class="text-muted small mt-2 mb-0">@GetText("Home.PlanHintText", "Later: creates Membership")</p>
                         </div>

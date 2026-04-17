@@ -164,10 +164,8 @@ namespace Gym.Data.Data
 
             var pages = new[]
             {
-                new PortalPage { Slug = "home", Title = "Home", Content = "Main page", IsPublished = true, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
-                new PortalPage { Slug = "schedule", Title = "Schedule", Content = "Class schedule page", IsPublished = true, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
-                new PortalPage { Slug = "membership-plans", Title = "Membership plans", Content = "Membership plans page", IsPublished = true, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
-                new PortalPage { Slug = "my-dashboard", Title = "My dashboard", Content = "Member dashboard page", IsPublished = true, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" }
+                new PortalPage { Slug = "about", Title = "About", Content = "<p>Gym.Web is your fitness club portal where members can browse schedules, choose membership plans, and manage bookings.</p>", IsPublished = true, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
+                new PortalPage { Slug = "terms", Title = "Terms", Content = "<p>By using Gym.Web, you agree to the terms of service and club regulations available on this page.</p>", IsPublished = true, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" }
             };
 
             foreach (var page in pages)

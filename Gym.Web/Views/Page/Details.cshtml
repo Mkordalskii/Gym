@@ -1,0 +1,18 @@
+@model Gym.Data.Models.Cms.PortalPage
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<section class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <h1 class="mb-4">@Model.Title</h1>
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    @Html.Raw(Model.Content)
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

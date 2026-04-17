@@ -14,8 +14,7 @@ namespace Gym.Web.Controllers
         {
             _context = context;
         }
-        [HttpGet("{slug?}")]
-        public async Task<IActionResult> Index(string? slug)
+        public async Task<IActionResult> Index()
         {
             var pages = await _context.PortalPage
                 .Where(p => p.IsPublished)
@@ -32,20 +31,7 @@ namespace Gym.Web.Controllers
                 .OrderBy(mp => mp.Price)
                 .ToListAsync();
             await LoadParametersAsync();
-
-            if (string.IsNullOrEmpty(slug))
-            {
-                var first = pages.FirstOrDefault();
-                slug = first?.Slug;
-            }
-
-            if (string.IsNullOrEmpty(slug))
-                return NotFound();
-
-            var item = await _context.PortalPage.FirstOrDefaultAsync(p => p.Slug == slug);
-            if (item == null) return NotFound();
-
-            return View(item);
+            return View();
         }
 
         public async Task<IActionResult> Privacy()
