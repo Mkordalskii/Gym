@@ -28,6 +28,20 @@ namespace Gym.Web.Controllers
                 .Where(mp => mp.IsActive)
                 .OrderBy(mp => mp.Price)
                 .ToListAsync();
+            ViewBag.NextClass = await _context.FitnessClass
+                .Where(fc => fc.IsActive)
+                .OrderBy(fc => fc.StartTime)
+                .FirstOrDefaultAsync();
+            ViewBag.ActiveMembership = await _context.Membership
+                .Include(m => m.MembershipPlan)
+                .Where(m => m.IsActive && m.EndDate >= DateTime.Now)
+                .OrderByDescending(m => m.EndDate)
+                .FirstOrDefaultAsync();
+            ViewBag.UpcomingClasses = await _context.FitnessClass
+                .Where(fc => fc.IsActive)
+                .OrderBy(fc => fc.StartTime)
+                .Take(3)
+                .ToListAsync();
 
             await LoadParametersAsync();
             return View();

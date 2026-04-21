@@ -1,0 +1,40 @@
+﻿@model Gym.Web.Models.UpcomingClassesViewModel
+
+@{
+    string GetText(string key, string fallback)
+    {
+        return Model.Parameters.ContainsKey(key) ? Model.Parameters[key] : fallback;
+    }
+}
+
+<div class="card-body p-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="card-title mb-0">@GetText("Home.NextClassesTitle", "Next classes")</h5>
+        <span class="badge text-bg-primary">@GetText("Home.NextClassesBadge", "Live")</span>
+    </div>
+
+    @if (Model.Classes.Any())
+    {
+        <ul class="list-group list-group-flush small">
+            @foreach (var item in Model.Classes.Take(3))
+            {
+                <li class="list-group-item d-flex justify-content-between px-0">
+                    <span>@item.Title</span>
+                    <strong>@item.StartTime.ToString("HH:mm")</strong>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <div class="text-muted small">
+            @GetText("Home.NextClassesEmpty", "No classes available today.")
+        </div>
+    }
+
+    <div class="d-grid mt-3">
+        <a asp-controller="FitnessClasses" asp-action="Index" class="btn btn-primary btn-sm">
+            @GetText("Home.NextClassesButton", "Book a class")
+        </a>
+    </div>
+</div>

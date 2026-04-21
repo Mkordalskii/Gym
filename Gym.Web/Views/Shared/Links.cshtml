@@ -8,13 +8,10 @@
             <a class="nav-link" asp-area="" asp-controller="MembershipPlans" asp-action="Index">Membership</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Schedule</a>
+            <a class="nav-link" asp-area="" asp-controller="FitnessClasses" asp-action="Index">Schedule</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" asp-area="" asp-controller="Announcements" asp-action="Index">Announcements</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" asp-area="" asp-controller="FitnessClasses" asp-action="Index">Fitness Classes</a>
         </li>
         @foreach (var item in Model)
         {
@@ -23,5 +20,5 @@
             </li>
         }
     </ul>
-    <a class="btn btn-light btn-sm px-3" href="#dashboard">My dashboard</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-light btn-sm px-3">My dashboard</a>
 </div>

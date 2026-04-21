@@ -1,0 +1,45 @@
+﻿@model ActiveMembershipViewModel
+@{
+    string GetText(string key, string fallback)
+    {
+        return Model.Parameters.ContainsKey(key) ? Model.Parameters[key] : fallback;
+    }
+
+    var membership = Model.Membership;
+}
+
+<div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+            <h6 class="text-uppercase text-muted">
+                @GetText("Home.ActiveMembershipLabel", "Active membership")
+            </h6>
+            @if (membership != null)
+            {
+                <h4 class="mb-1">@membership.MembershipPlan?.Name</h4>
+
+                <p class="mb-2">
+                    @GetText("Home.ActiveMembershipStatusLabel", "Status"):
+                    <span class="badge text-bg-success">
+                        @GetText("Home.ActiveMembershipStatusValue", "Active")
+                    </span>
+                </p>
+
+                <p class="mb-0">
+                    @GetText("Home.ActiveMembershipExpiresLabel", "Expires on"):
+                    <strong>@membership.EndDate.ToString("dd.MM.yyyy")</strong>
+                </p>
+            }
+            else
+            {
+                <p class="text-muted mb-0">
+                    @GetText("Home.ActiveMembershipEmpty", "No active membership.")
+                </p>
+            }
+
+            <p class="text-muted small mt-2 mb-0">
+                @GetText("Home.ActiveMembershipEntityLabel", "Entity: Membership + MembershipPlan")
+            </p>
+        </div>
+    </div>
+</div>

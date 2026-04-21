@@ -3,15 +3,19 @@
     var parameters = ViewBag.Parameters as Dictionary<string, string> ?? new Dictionary<string, string>();
     var membershipPlans = ViewBag.MembershipPlans as List<Gym.Data.Models.Core.MembershipPlan> ?? new List<Gym.Data.Models.Core.MembershipPlan>();
     var announcements = ViewBag.Announcements as List<Gym.Data.Models.Core.Announcement> ?? new List<Gym.Data.Models.Core.Announcement>();
-
+    var nextClass = ViewBag.NextClass as Gym.Data.Models.Core.FitnessClass;
+    var membership = ViewBag.ActiveMembership as Gym.Data.Models.Core.Membership;
     string GetText(string key, string fallback)
     {
         return parameters.ContainsKey(key) ? parameters[key] : fallback;
     }
 
+    var upcomingClasses = ViewBag.UpcomingClasses as List<Gym.Data.Models.Core.FitnessClass>
+        ?? new List<Gym.Data.Models.Core.FitnessClass>();
+
     var latestAnnouncement = announcements.FirstOrDefault();
     ViewData["Title"] = GetText("Home.PageTitle", "Customer web");
-}
+ }
 <section class="hero-section py-5">
     <div class="container py-4">
         <div class="row align-items-center g-4">
@@ -22,9 +26,9 @@
                 </p>
 
                 <div class="d-flex flex-wrap gap-2">
-                    <a href="#grafik" class="btn btn-primary btn-lg px-4">@GetText("Home.HeroPrimaryButton", "View schedule")</a>
+                    <a asp-controller="FitnessClasses" asp-action="Index" class="btn btn-primary btn-lg px-4">@GetText("Home.HeroPrimaryButton", "View schedule")</a>
                     <a asp-controller="MembershipPlans" asp-action="Index" class="btn btn-outline-primary btn-lg px-4">@GetText("Home.HeroSecondaryButton", "Membership plans")</a>
-                    <a href="#dashboard" class="btn btn-outline-secondary btn-lg px-4">@GetText("Home.HeroTertiaryButton", "My dashboard")</a>
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary btn-lg px-4">@GetText("Home.HeroTertiaryButton", "My dashboard")</a>
                 </div>
 
                 <p class="text-muted mt-3 mb-0 small">
@@ -34,28 +38,11 @@
 
             <div class="col-lg-5">
                 <div class="card border-0 shadow-sm hero-card">
-                    <div class="card-body p-4">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="card-title mb-0">@GetText("Home.NextClassesTitle", "Next classes (today)")</h5>
-                            <span class="badge text-bg-primary">@GetText("Home.NextClassesBadge", "Live")</span>
-                        </div>
-
-                        <ul class="list-group list-group-flush small">
-                            <li class="list-group-item d-flex justify-content-between px-0">
-                                <span>@GetText("Home.NextClass1Name", "Yoga Flow")</span><strong>@GetText("Home.NextClass1Time", "18:00")</strong>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between px-0">
-                                <span>@GetText("Home.NextClass2Name", "Crossfit Intro")</span><strong>@GetText("Home.NextClass2Time", "19:30")</strong>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between px-0">
-                                <span>@GetText("Home.NextClass3Name", "Pilates Core")</span><strong>@GetText("Home.NextClass3Time", "20:15")</strong>
-                            </li>
-                        </ul>
-
-                        <div class="d-grid mt-3">
-                            <a href="#grafik" class="btn btn-primary btn-sm">@GetText("Home.NextClassesButton", "Book a class")</a>
-                        </div>
-                    </div>
+                    @await Html.PartialAsync("_UpcomingClassesHome",new UpcomingClassesViewModel
+                    {
+                        Classes = upcomingClasses,
+                        Parameters = parameters
+                    })
                 </div>
             </div>
 
@@ -65,36 +52,20 @@
 
 <section id="dashboard" class="container my-5">
     <div class="row g-3">
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body">
-                    <h6 class="text-uppercase text-muted">@GetText("Home.ActiveMembershipLabel", "Active membership")</h6>
-                    <h4 class="mb-1">@GetText("Home.ActiveMembershipPlanName", "Premium 30 days")</h4>
-                    <p class="mb-2">@GetText("Home.ActiveMembershipStatusLabel", "Status"): <span class="badge text-bg-success">@GetText("Home.ActiveMembershipStatusValue", "Active")</span></p>
-                    <p class="mb-0">@GetText("Home.ActiveMembershipExpiresLabel", "Expires on"): <strong>@GetText("Home.ActiveMembershipExpiresValue", "24.04.2026")</strong></p>
-                    <p class="text-muted small mt-2 mb-0">@GetText("Home.ActiveMembershipEntityLabel", "Entity: Membership + MembershipPlan")</p>
-                </div>
-            </div>
-        </div>
+        @await Html.PartialAsync("_ActiveMembershipHome",new ActiveMembershipViewModel
+        {
+            Membership = membership,
+            Parameters = parameters
+        })
 
-        <div class="col-md-4" id="grafik">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body">
-                    <h6 class="text-uppercase text-muted">@GetText("Home.UpcomingBookingLabel", "Upcoming booking")</h6>
-                    <h4 class="mb-1">@GetText("Home.UpcomingBookingClassName", "HIIT Cardio")</h4>
-                    <p class="mb-2">
-                        <span class="badge text-bg-primary">@GetText("Home.UpcomingBookingStatus", "Booked")</span>
-                        <span class="text-muted"> • </span>
-                        <span>@GetText("Home.UpcomingBookingWhen", "Tomorrow, 17:45")</span>
-                    </p>
-                    <p class="mb-0">@GetText("Home.UpcomingBookingRoomLabel", "Room"): <strong>@GetText("Home.UpcomingBookingRoomValue", "B")</strong> • @GetText("Home.UpcomingBookingDurationLabel", "Duration"): <strong>@GetText("Home.UpcomingBookingDurationValue", "45 min")</strong></p>
-                    <p class="text-muted small mt-2 mb-0">@GetText("Home.UpcomingBookingEntityLabel", "Entity: Booking + FitnessClass")</p>
-                </div>
-            </div>
-        </div>
+        @await Html.PartialAsync("_UpcomingBookingHome",new UpcomingBookingViewModel  
+        {
+            FitnessClass = nextClass,
+            Parameters = parameters
+        })
         @if (latestAnnouncement != null)
         {
-		    @await Html.PartialAsync("AnnouncementsHomePage", latestAnnouncement) @* wstawia zawartość z AnnouncementsHomePage.cshtml, który pokazuje najnowsze ogłoszenie *@
+		    @await Html.PartialAsync("_AnnouncementsHomePage", latestAnnouncement) @* wstawia zawartość z AnnouncementsHomePage.cshtml, który pokazuje najnowsze ogłoszenie *@
         }
     </div>
 </section>

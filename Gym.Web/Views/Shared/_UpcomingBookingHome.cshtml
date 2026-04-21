@@ -1,0 +1,46 @@
+﻿@model UpcomingBookingViewModel
+@{
+    string GetText(string key, string fallback)
+    {
+        return Model.Parameters.ContainsKey(key) ? Model.Parameters[key] : fallback;
+    }
+
+    var fc = Model.FitnessClass;
+}
+
+<div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+            <h6 class="text-uppercase text-muted">
+                @GetText("Home.UpcomingBookingLabel", "Upcoming booking")
+            </h6>
+            @if (fc != null)
+            {
+                <h4 class="mb-1">@fc.Title</h4>
+                <p class="mb-2">
+                    <span class="badge text-bg-primary">
+                        @GetText("Home.UpcomingBookingStatus", "Booked")
+                    </span>
+                    <span class="text-muted"> • </span>
+                    <span>@fc.StartTime.ToString("dd.MM HH:mm")</span>
+                </p>
+                <p class="mb-0">
+                    @GetText("Home.UpcomingBookingRoomLabel", "Room"):
+                    <strong>@fc.Room</strong>
+                    •
+                    @GetText("Home.UpcomingBookingDurationLabel", "Duration"):
+                    <strong>@fc.DurationInMinutes min</strong>
+                </p>
+            }
+            else
+            {
+                <p class="text-muted mb-0">
+                    @GetText("Home.UpcomingBookingEmpty", "No upcoming bookings.")
+                </p>
+            }
+            <p class="text-muted small mt-2 mb-0">
+                @GetText("Home.UpcomingBookingEntityLabel", "Entity: Booking + FitnessClass")
+            </p>
+        </div>
+    </div>
+</div>
