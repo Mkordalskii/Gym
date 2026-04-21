@@ -16,12 +16,10 @@ namespace Gym.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var pages = await _context.PortalPage
+            ViewBag.PageModel = await _context.PortalPage
                 .Where(p => p.IsPublished)
                 .OrderBy(p => p.Id)
                 .ToListAsync();
-
-            ViewBag.PageModel = pages;
             ViewBag.Announcements = await _context.Announcement
                 .Where(a => a.IsActive)
                 .OrderByDescending(a => a.Id)
@@ -30,6 +28,7 @@ namespace Gym.Web.Controllers
                 .Where(mp => mp.IsActive)
                 .OrderBy(mp => mp.Price)
                 .ToListAsync();
+
             await LoadParametersAsync();
             return View();
         }
@@ -50,7 +49,7 @@ namespace Gym.Web.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        private async Task LoadParametersAsync()
+        public async Task LoadParametersAsync()
         {
             ViewBag.Parameters = await _context.Parameter
                 .Where(p => p.IsActive)

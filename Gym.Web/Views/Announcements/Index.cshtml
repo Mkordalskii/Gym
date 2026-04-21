@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Gym.Data.Models.Core.Announcement>
+@{
+	var parameters = ViewBag.Parameters as IDictionary<string, string> ?? new Dictionary<string, string>();
+	string GetText(string key, string fallback) => parameters.ContainsKey(key) ? parameters[key] : fallback;
+	ViewData["Title"] = GetText("Announcements.Title", "Announcements");
+}
+<section class="container my-5 pb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">@GetText("Announcements.Title", "Announcements")</h1>
+    </div>
+
+    <div class="row g-3">
+        @if (Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="mb-2">@item.Title</h5>
+
+                            <p class="text-muted small mb-2">
+                                @item.PublishFrom.ToString("dd.MM.yyyy")
+                            </p>
+
+                            <p class="mb-0">
+                                @item.Content
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="alert alert-info mb-0">
+                    @GetText("Announcements.Empty", "No announcements available.")
+                </div>
+            </div>
+        }
+    </div>
+</section>
+

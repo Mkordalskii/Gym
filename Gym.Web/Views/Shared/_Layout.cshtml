@@ -11,7 +11,6 @@
 <body>
     @{
         var parameters = ViewBag.Parameters as IDictionary<string, string> ?? new Dictionary<string, string>();
-        var pages = ViewBag.PageModel as IEnumerable<Gym.Data.Models.Cms.PortalPage> ?? Enumerable.Empty<Gym.Data.Models.Cms.PortalPage>();
         string Txt(string key) => parameters.TryGetValue(key, out var value) && !string.IsNullOrWhiteSpace(value) ? value : $"[{key}]";
     }
     <header>
@@ -21,7 +20,7 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#webNavbar" aria-controls="webNavbar" aria-expanded="false" aria-label="Przełącz nawigację">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                @await Html.PartialAsync("Links", pages) @* wstawia zawartość z Links.cshtml, który generuje linki do stron CMS *@
+                @await Html.PartialAsync("Links", (IEnumerable<Gym.Data.Models.Cms.PortalPage>)ViewBag.PageModel) @* wstawia zawartość z Links.cshtml, który generuje linki do stron CMS *@
             </div>
         </nav>
     </header>
