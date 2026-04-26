@@ -1,0 +1,53 @@
+﻿@model Gym.Admin.Models.Home.AdminDashboardViewModel
+
+@{
+    string GetText(string key, string fallback)
+    {
+        return Model.Parameters.ContainsKey(key) ? Model.Parameters[key] : fallback;
+    }
+}
+<section class="mb-4">
+    <div class="row g-3">
+        <div class="col-sm-6 col-xl-3">
+            <div class="card stat-card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">@GetText("Admin.Dashboard.ActiveMembers", "Members (active)")</p>
+                    <h3 class="mb-0">@Model.ActiveMembersCount</h3>
+                    <small class="text-muted">@GetText("Admin.Dashboard.TotalMembers", "Total members"): @Model.TotalMembersCount</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="card stat-card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">@GetText("Admin.Dashboard.ActiveMemberships", "Active memberships")</p>
+                    <h3 class="mb-0">@Model.ActiveMembershipsCount</h3>
+                    <small class="text-muted">@GetText("Admin.Dashboard.ExpiringSoon", "Expiring in 7 days"): @Model.MembershipsExpiringSoonCount</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="card stat-card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">@GetText("Admin.Dashboard.TodayBookings", "Bookings (today)")</p>
+                    <h3 class="mb-0">@Model.TodayBookingsCount</h3>
+                    <small class="text-muted">@GetText("Admin.Dashboard.TodayCancellations", "Cancellations today"): @Model.TodayCancelledBookingsCount</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="card stat-card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <p class="text-muted mb-1">@GetText("Admin.Dashboard.CmsContent", "CMS content")</p>
+                    <h3 class="mb-0">@Model.CmsParametersCount</h3>
+                    <small class="text-muted">
+                        @GetText("Admin.Dashboard.Pages", "Pages"): @Model.CmsPagesCount
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

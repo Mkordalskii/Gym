@@ -1,0 +1,44 @@
+﻿@model Gym.Admin.Models.Home.AdminDashboardViewModel
+
+@{
+    string GetText(string key, string fallback)
+    {
+        return Model.Parameters.ContainsKey(key) ? Model.Parameters[key] : fallback;
+    }
+}
+
+<div class="col-xl-4">
+    <div class="card border-0 shadow-sm h-100">
+        <div class="card-header bg-white">
+            <h2 class="h6 mb-0">@GetText("Admin.Dashboard.QuickActions", "Quick actions")</h2>
+        </div>
+
+        <div class="card-body d-grid gap-2">
+            <a class="btn btn-primary" asp-controller="Members" asp-action="Create">
+                @GetText("Admin.Dashboard.AddMember", "Add member")
+            </a>
+
+            <a class="btn btn-outline-primary" asp-controller="MembershipPlans" asp-action="Create">
+                @GetText("Admin.Dashboard.CreateMembershipPlan", "Create membership plan")
+            </a>
+
+            <a class="btn btn-outline-secondary" asp-controller="FitnessClasses" asp-action="Create">
+                @GetText("Admin.Dashboard.AddClass", "Add class to schedule")
+            </a>
+
+            <a class="btn btn-outline-dark" asp-controller="Announcements" asp-action="Create">
+                @GetText("Admin.Dashboard.PostAnnouncement", "Post announcement")
+            </a>
+
+            <hr class="my-2" />
+
+            <a class="btn btn-outline-success" asp-controller="Parameters" asp-action="Index">
+                @GetText("Admin.Dashboard.EditParameters", "Edit parameters (CMS)")
+            </a>
+
+            <a class="btn btn-outline-success" asp-controller="PortalPages" asp-action="Index">
+                @GetText("Admin.Dashboard.EditPortalPages", "Edit portal pages (CMS)")
+            </a>
+        </div>
+    </div>
+</div>

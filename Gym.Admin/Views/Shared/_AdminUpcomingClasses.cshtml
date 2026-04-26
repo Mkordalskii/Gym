@@ -1,0 +1,75 @@
+﻿@model Gym.Admin.Models.Home.AdminDashboardViewModel
+@{
+    string GetText(string key, string fallback)
+    {
+        return Model.Parameters.ContainsKey(key) ? Model.Parameters[key] : fallback;
+    }
+}
+<div class="col-xl-8">
+    <div class="card border-0 shadow-sm h-100">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <h2 class="h6 mb-0">@GetText("Admin.Dashboard.UpcomingClasses", "Upcoming classes")</h2>
+            <span class="badge text-bg-primary">@GetText("Admin.Dashboard.Today", "Today")</span>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>@GetText("Admin.Dashboard.Class", "Class")</th>
+                        <th>@GetText("Admin.Dashboard.Start", "Start")</th>
+                        <th>@GetText("Admin.Dashboard.Room", "Room")</th>
+                        <th>@GetText("Admin.Dashboard.Capacity", "Capacity")</th>
+                        <th>@GetText("Admin.Dashboard.Bookings", "Bookings")</th>
+                        <th>@GetText("Admin.Dashboard.Status", "Status")</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model.UpcomingClasses.Any())
+                    {
+                        foreach (var item in Model.UpcomingClasses)
+                        {
+                            var bookingsCount = item.Bookings?.Count(b => b.IsActive && b.Status != "Cancelled") ?? 0;
+                            var isFull = bookingsCount >= item.Capacity;
+
+                            <tr>
+                                <td>@item.Title</td>
+                                <td>@item.StartTime.ToString("HH:mm")</td>
+                                <td>@item.Room</td>
+                                <td>@item.Capacity</td>
+                                <td>
+                                    <span class="badge @(isFull ? "text-bg-danger" : "text-bg-success")">
+                                        @bookingsCount / @item.Capacity
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge @(isFull ? "text-bg-danger" : "text-bg-success")">
+                                        @(isFull ? GetText("Admin.Dashboard.Full", "Full") : GetText("Admin.Dashboard.Open", "Open"))
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-muted">
+                                @GetText("Admin.Dashboard.NoClassesToday", "No classes scheduled for today.")
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-footer bg-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <small class="text-muted">
+                @GetText("Admin.Dashboard.CapacityTip", "Tip: capacity is based on FitnessClass.Capacity and bookings count.")
+            </small>
+            <a class="btn btn-outline-primary btn-sm" asp-controller="FitnessClasses" asp-action="Index">
+                @GetText("Admin.Dashboard.ViewFullSchedule", "View full schedule")
+            </a>
+        </div>
+    </div>
+</div>
