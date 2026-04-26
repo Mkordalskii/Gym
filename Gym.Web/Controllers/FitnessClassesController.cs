@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Gym.Web.Controllers
 {
-    public class FitnessClasses : Controller
+    public class FitnessClassesController : Controller
     {
         private readonly GymContext _context;
-        public FitnessClasses(GymContext context)
+        public FitnessClassesController(GymContext context)
         {
             _context = context;
         }

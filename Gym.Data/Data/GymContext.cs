@@ -24,7 +24,6 @@ namespace Gym.Data.Data
 
         public DbSet<Gym.Data.Models.Cms.PortalPage> PortalPage { get; set; } = default!;
 
-        public DbSet<Gym.Data.Models.Cms.PortalText> PortalText { get; set; } = default!;
         public DbSet<Gym.Data.Models.Cms.Parameter> Parameter { get; set; } = default!;
         public DbSet<Gym.Data.Models.Cms.ParameterCategory> ParameterCategory { get; set; } = default!;
 
