@@ -1,5 +1,6 @@
 ﻿using Gym.Data.Data;
 using Gym.Data.Models.Core;
+using Gym.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,9 +9,11 @@ namespace Gym.Web.Controllers
     public class BookingsController : Controller
     {
         private readonly GymContext _context;
-        public BookingsController(GymContext context)
+        private readonly IParameterService _parameterService;
+        public BookingsController(GymContext context, IParameterService parameterService)
         {
             _context = context;
+            _parameterService = parameterService;
         }
         public async Task<IActionResult> Index()
         {
@@ -19,9 +22,7 @@ namespace Gym.Web.Controllers
                 .OrderBy(p => p.Id)
                 .ToListAsync();
 
-            ViewBag.Parameters = await _context.Parameter
-                .Where(p => p.IsActive)
-                .ToDictionaryAsync(p => p.Name, p => p.Value);
+            ViewBag.Parameters = await _parameterService.GetAllActiveParametersAsync();
 
             var member = await _context.Member.FirstOrDefaultAsync();
 

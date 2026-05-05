@@ -1,5 +1,7 @@
 <Solution>
   <Project Path="Gym.Admin/Gym.Admin.csproj" />
   <Project Path="Gym.Data/Gym.Data.csproj" Id="590167cf-4e21-4c4b-a1e7-2d8e2d8a10b5" />
+  <Project Path="Gym.Interfaces/Gym.Interfaces.csproj" Id="a9f88a98-a139-45bb-acea-373bd531d3b0" />
+  <Project Path="Gym.Services/Gym.Services.csproj" Id="fc0b2c12-c1a6-4ad7-9f04-47d7539e884d" />
   <Project Path="Gym.Web/Gym.Web.csproj" />
 </Solution>

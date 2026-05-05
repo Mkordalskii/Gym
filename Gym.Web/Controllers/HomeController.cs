@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Gym.Data.Data;
+using Gym.Interfaces;
 using Gym.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,10 +10,12 @@ namespace Gym.Web.Controllers
     public class HomeController : Controller
     {
         private readonly GymContext _context;
+        private readonly IParameterService _parameterService;
 
-        public HomeController(GymContext context)
+        public HomeController(GymContext context, IParameterService parameterService)
         {
             _context = context;
+            _parameterService = parameterService;
         }
         public async Task<IActionResult> Index()
         {
@@ -65,9 +68,7 @@ namespace Gym.Web.Controllers
 
         public async Task LoadParametersAsync()
         {
-            ViewBag.Parameters = await _context.Parameter
-                .Where(p => p.IsActive)
-                .ToDictionaryAsync(p => p.Name, p => p.Value);
+            ViewBag.Parameters = await _parameterService.GetAllActiveParametersAsync();
         }
     }
 }

@@ -1,4 +1,6 @@
 using Gym.Data.Data;
+using Gym.Interfaces;
+using Gym.Services;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<GymContext>(options =>
@@ -7,6 +9,7 @@ builder.Services.AddDbContext<GymContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IParameterService, ParameterService>();
 
 var app = builder.Build();
 

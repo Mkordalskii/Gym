@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Gym.Data\Gym.Data.csproj" />
+    <ProjectReference Include="..\Gym.Interfaces\Gym.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>
