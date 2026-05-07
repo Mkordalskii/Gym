@@ -9,17 +9,16 @@ namespace Gym.Web.Controllers
     {
         private readonly GymContext _context;
         private readonly IParameterService _parameterService;
-        public AnnouncementsController(GymContext context, IParameterService parameterService)
+        private readonly IPortalPageService _portalPageService;
+        public AnnouncementsController(GymContext context, IParameterService parameterService, IPortalPageService portalPageService)
         {
             _context = context;
             _parameterService = parameterService;
+            _portalPageService = portalPageService;
         }
         public async Task<IActionResult> Index()
         {
-            ViewBag.PageModel = await _context.PortalPage
-                .Where(p => p.IsPublished)
-                .OrderBy(p => p.Id)
-                .ToListAsync();
+            ViewBag.PageModel = await _portalPageService.GetPublishedPortalPagesAsync();
             ViewBag.Parameters = await _parameterService.GetAllActiveParametersAsync();
             var announcements = await _context.Announcement
                 .Where(a => a.IsActive)
