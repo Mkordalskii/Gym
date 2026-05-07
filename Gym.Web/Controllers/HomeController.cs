@@ -1,50 +1,44 @@
 using System.Diagnostics;
-using Gym.Data.Data;
 using Gym.Interfaces;
 using Gym.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Gym.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly GymContext _context;
         private readonly IParameterService _parameterService;
         private readonly IPortalPageService _portalPageService;
         private readonly IBookingService _bookingService;
         private readonly IFitnessClassService _fitnessClassService;
+        private readonly IMembershipPlanService _membershipPlanService;
+        private readonly IAnnouncementService _announcementService;
+        private readonly IMembershipService _membershipService;
 
         public HomeController(
-            GymContext context,
             IParameterService parameterService,
             IPortalPageService portalPageService,
             IBookingService bookingService,
-            IFitnessClassService fitnessClassService)
+            IFitnessClassService fitnessClassService,
+            IMembershipPlanService membershipPlanService,
+            IAnnouncementService announcementService,
+            IMembershipService membershipService)
         {
-            _context = context;
             _parameterService = parameterService;
             _portalPageService = portalPageService;
             _bookingService = bookingService;
             _fitnessClassService = fitnessClassService;
+            _membershipPlanService = membershipPlanService;
+            _announcementService = announcementService;
+            _membershipService = membershipService;
         }
         public async Task<IActionResult> Index()
         {
             ViewBag.PageModel = await _portalPageService.GetPublishedPortalPagesAsync();
-            ViewBag.Announcements = await _context.Announcement
-                .Where(a => a.IsActive)
-                .OrderByDescending(a => a.Id)
-                .ToListAsync();
-            ViewBag.MembershipPlans = await _context.MembershipPlan
-                .Where(mp => mp.IsActive)
-                .OrderBy(mp => mp.Price)
-                .ToListAsync();
+            ViewBag.LatestAnnouncement = await _announcementService.GetLatestAnnouncementAsync();
+            ViewBag.MembershipPlans = await _membershipPlanService.GetActiveMembershipPlansAsync();
             ViewBag.UpcomingBooking = await _bookingService.GetUpcomingBookingForCurrentMemberAsync();
-            ViewBag.ActiveMembership = await _context.Membership
-                .Include(m => m.MembershipPlan)
-                .Where(m => m.IsActive && m.EndDate >= DateTime.Now)
-                .OrderByDescending(m => m.EndDate)
-                .FirstOrDefaultAsync();
+            ViewBag.ActiveMembership = await _membershipService.GetActiveMembershipForCurrentMemberAsync();
             ViewBag.UpcomingClasses = await _fitnessClassService.GetUpcomingFitnessClassesAsync(3);
 
             await LoadParametersAsync();
@@ -54,10 +48,7 @@ namespace Gym.Web.Controllers
         public async Task<IActionResult> Privacy()
         {
             await LoadParametersAsync();
-            ViewBag.PageModel = await _context.PortalPage
-                .Where(p => p.IsPublished)
-                .OrderBy(p => p.Id)
-                .ToListAsync();
+            ViewBag.PageModel = await _portalPageService.GetPublishedPortalPagesAsync();
             return View();
         }
 
@@ -73,4 +64,3 @@ namespace Gym.Web.Controllers
         }
     }
 }
-

@@ -1,18 +1,16 @@
-﻿using Gym.Data.Data;
-using Gym.Interfaces;
+﻿using Gym.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Gym.Web.Controllers
 {
     public class AnnouncementsController : Controller
     {
-        private readonly GymContext _context;
+        private readonly IAnnouncementService _announcementService;
         private readonly IParameterService _parameterService;
         private readonly IPortalPageService _portalPageService;
-        public AnnouncementsController(GymContext context, IParameterService parameterService, IPortalPageService portalPageService)
+        public AnnouncementsController(IAnnouncementService announcementService, IParameterService parameterService, IPortalPageService portalPageService)
         {
-            _context = context;
+            _announcementService = announcementService;
             _parameterService = parameterService;
             _portalPageService = portalPageService;
         }
@@ -20,10 +18,7 @@ namespace Gym.Web.Controllers
         {
             ViewBag.PageModel = await _portalPageService.GetPublishedPortalPagesAsync();
             ViewBag.Parameters = await _parameterService.GetAllActiveParametersAsync();
-            var announcements = await _context.Announcement
-                .Where(a => a.IsActive)
-                .OrderByDescending(a => a.PublishFrom)
-                .ToListAsync();
+            var announcements = await _announcementService.GetActiveAnnouncementsAsync();
             return View(announcements);
         }
     }

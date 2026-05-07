@@ -2,7 +2,7 @@
 @{
     var parameters = ViewBag.Parameters as Dictionary<string, string> ?? new Dictionary<string, string>();
     var membershipPlans = ViewBag.MembershipPlans as List<Gym.Data.Models.Core.MembershipPlan> ?? new List<Gym.Data.Models.Core.MembershipPlan>();
-    var announcements = ViewBag.Announcements as List<Gym.Data.Models.Core.Announcement> ?? new List<Gym.Data.Models.Core.Announcement>();
+    var latestAnnouncement = ViewBag.LatestAnnouncement as Gym.Data.Models.Core.Announcement;
     var upcomingBooking = ViewBag.UpcomingBooking as Gym.Data.Models.Core.Booking;
     var membership = ViewBag.ActiveMembership as Gym.Data.Models.Core.Membership;
     string GetText(string key, string fallback)
@@ -13,7 +13,6 @@
     var upcomingClasses = ViewBag.UpcomingClasses as List<Gym.Data.Models.Core.FitnessClass>
         ?? new List<Gym.Data.Models.Core.FitnessClass>();
 
-    var latestAnnouncement = announcements.FirstOrDefault();
     ViewData["Title"] = GetText("Home.PageTitle", "Customer web");
  }
 <section class="hero-section py-5">

@@ -1,19 +1,17 @@
-using Gym.Data.Data;
 using Gym.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Gym.Web.Controllers
 {
     public class MembershipPlansController : Controller
     {
-        private readonly GymContext _context;
+        private readonly IMembershipPlanService _membershipPlanService;
         private readonly IParameterService _parameterService;
         private readonly IPortalPageService _portalPageService;
 
-        public MembershipPlansController(GymContext context, IParameterService parameterService, IPortalPageService portalPageService)
+        public MembershipPlansController(IMembershipPlanService membershipPlanService, IParameterService parameterService, IPortalPageService portalPageService)
         {
-            _context = context;
+            _membershipPlanService = membershipPlanService;
             _parameterService = parameterService;
             _portalPageService = portalPageService;
         }
@@ -23,10 +21,7 @@ namespace Gym.Web.Controllers
             ViewBag.PageModel = await _portalPageService.GetPublishedPortalPagesAsync();
             ViewBag.Parameters = await _parameterService.GetAllActiveParametersAsync();
 
-            var plans = await _context.MembershipPlan
-                .Where(mp => mp.IsActive)
-                .OrderBy(mp => mp.Price)
-                .ToListAsync();
+            var plans = await _membershipPlanService.GetActiveMembershipPlansAsync();
 
             return View(plans);
         }
