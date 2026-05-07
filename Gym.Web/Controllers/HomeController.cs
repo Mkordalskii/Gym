@@ -13,17 +13,20 @@ namespace Gym.Web.Controllers
         private readonly IParameterService _parameterService;
         private readonly IPortalPageService _portalPageService;
         private readonly IBookingService _bookingService;
+        private readonly IFitnessClassService _fitnessClassService;
 
         public HomeController(
             GymContext context,
             IParameterService parameterService,
             IPortalPageService portalPageService,
-            IBookingService bookingService)
+            IBookingService bookingService,
+            IFitnessClassService fitnessClassService)
         {
             _context = context;
             _parameterService = parameterService;
             _portalPageService = portalPageService;
             _bookingService = bookingService;
+            _fitnessClassService = fitnessClassService;
         }
         public async Task<IActionResult> Index()
         {
@@ -42,11 +45,7 @@ namespace Gym.Web.Controllers
                 .Where(m => m.IsActive && m.EndDate >= DateTime.Now)
                 .OrderByDescending(m => m.EndDate)
                 .FirstOrDefaultAsync();
-            ViewBag.UpcomingClasses = await _context.FitnessClass
-                .Where(fc => fc.IsActive)
-                .OrderBy(fc => fc.StartTime)
-                .Take(3)
-                .ToListAsync();
+            ViewBag.UpcomingClasses = await _fitnessClassService.GetUpcomingFitnessClassesAsync(3);
 
             await LoadParametersAsync();
             return View();
