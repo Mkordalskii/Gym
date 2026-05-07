@@ -1,19 +1,16 @@
-﻿using Gym.Data.Data;
-using Gym.Data.Models.Core;
-using Gym.Interfaces;
+﻿using Gym.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Gym.Web.Controllers
 {
     public class BookingsController : Controller
     {
-        private readonly GymContext _context;
+        private readonly IBookingService _bookingService;
         private readonly IParameterService _parameterService;
         private readonly IPortalPageService _portalPageService;
-        public BookingsController(GymContext context, IParameterService parameterService, IPortalPageService portalPageService)
+        public BookingsController(IBookingService bookingService, IParameterService parameterService, IPortalPageService portalPageService)
         {
-            _context = context;
+            _bookingService = bookingService;
             _parameterService = parameterService;
             _portalPageService = portalPageService;
         }
@@ -22,87 +19,49 @@ namespace Gym.Web.Controllers
             ViewBag.PageModel = await _portalPageService.GetPublishedPortalPagesAsync();
             ViewBag.Parameters = await _parameterService.GetAllActiveParametersAsync();
 
-            var member = await _context.Member.FirstOrDefaultAsync();
-
-            if (member == null)
-            {
-                return View(new List<Gym.Data.Models.Core.Booking>());
-            }
-
-            var bookings = await _context.Booking
-                .Include(b => b.FitnessClass)
-                .Where(b => b.IsActive && b.MemberId == member.Id)
-                .OrderByDescending(b => b.FitnessClass.StartTime)
-                .ToListAsync();
+            var bookings = await _bookingService.GetActiveBookingsForCurrentMemberAsync();
 
             return View(bookings);
         }
         [HttpPost]
         public async Task<IActionResult> Create(int fitnessClassId)
         {
-            var fitnessClass = await _context.FitnessClass
-                .Include(fc => fc.Bookings)
-                .FirstOrDefaultAsync(fc => fc.Id == fitnessClassId);
+            var result = await _bookingService.CreateBookingForCurrentMemberAsync(fitnessClassId);
 
-            if (fitnessClass == null)
-                return NotFound();
-
-            var activeBookings = fitnessClass.Bookings
-                .Count(b => b.IsActive && b.Status != "Cancelled");
-
-            if (activeBookings >= fitnessClass.Capacity)
+            switch (result.Status)
             {
-                TempData["Error"] = "Class is full.";
-                return RedirectToAction("Index", "FitnessClasses");
+                case BookingOperationStatus.ClassNotFound:
+                    return NotFound();
+                case BookingOperationStatus.ClassFull:
+                    TempData["Error"] = "Class is full.";
+                    return RedirectToAction("Index", "FitnessClasses");
+                case BookingOperationStatus.NoMember:
+                    return BadRequest("No member");
+                case BookingOperationStatus.Success:
+                    TempData["Success"] = "Booking created.";
+                    return RedirectToAction("Index", "FitnessClasses");
+                default:
+                    return RedirectToAction("Index", "FitnessClasses");
             }
-
-            // TEMP: brak logowania / fake user
-            var member = await _context.Member.FirstOrDefaultAsync();
-
-            if (member == null)
-                return BadRequest("No member");
-
-            var booking = new Booking
-            {
-                MemberId = member.Id,
-                FitnessClassId = fitnessClassId,
-                Status = "Booked",
-                IsActive = true,
-                CreatedAt = DateTime.UtcNow,
-                CreatedBy = "Web"
-            };
-
-            _context.Booking.Add(booking);
-            await _context.SaveChangesAsync();
-
-            TempData["Success"] = "Booking created.";
-
-            return RedirectToAction("Index", "FitnessClasses");
         }
         [HttpPost]
         public async Task<IActionResult> Cancel(int id)
         {
-            var booking = await _context.Booking
-                .Include(b => b.FitnessClass)
-                .FirstOrDefaultAsync(b => b.Id == id && b.IsActive);
+            var result = await _bookingService.CancelBookingAsync(id);
 
-            if (booking == null)
-                return NotFound();
-
-            if (booking.Status == "Cancelled")
+            switch (result.Status)
             {
-                TempData["Error"] = "Booking is already cancelled.";
-                return RedirectToAction(nameof(Index));
+                case BookingOperationStatus.BookingNotFound:
+                    return NotFound();
+                case BookingOperationStatus.AlreadyCancelled:
+                    TempData["Error"] = "Booking is already cancelled.";
+                    return RedirectToAction(nameof(Index));
+                case BookingOperationStatus.Success:
+                    TempData["Success"] = "Booking cancelled.";
+                    return RedirectToAction(nameof(Index));
+                default:
+                    return RedirectToAction(nameof(Index));
             }
-
-            booking.Status = "Cancelled";
-            booking.ModifiedAt = DateTime.UtcNow;
-            booking.ModifiedBy = "Web";
-
-            await _context.SaveChangesAsync();
-
-            TempData["Success"] = "Booking cancelled.";
-            return RedirectToAction(nameof(Index));
         }
     }
 }

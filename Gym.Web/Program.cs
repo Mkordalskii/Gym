@@ -11,6 +11,7 @@ builder.Services.AddDbContext<GymContext>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IParameterService, ParameterService>();
 builder.Services.AddScoped<IPortalPageService, PortalPageService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 
 var app = builder.Build();
 

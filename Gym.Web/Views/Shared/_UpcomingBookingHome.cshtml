@@ -5,7 +5,8 @@
         return Model.Parameters.ContainsKey(key) ? Model.Parameters[key] : fallback;
     }
 
-    var fc = Model.FitnessClass;
+    var booking = Model.Booking;
+    var fc = booking?.FitnessClass;
 }
 
 <div class="col-md-4">
@@ -14,12 +15,12 @@
             <h6 class="text-uppercase text-muted">
                 @GetText("Home.UpcomingBookingLabel", "Upcoming booking")
             </h6>
-            @if (fc != null)
+            @if (booking != null && fc != null)
             {
                 <h4 class="mb-1">@fc.Title</h4>
                 <p class="mb-2">
                     <span class="badge text-bg-primary">
-                        @GetText("Home.UpcomingBookingStatus", "Booked")
+                        @GetText($"Home.UpcomingBookingStatus.{booking.Status}", booking.Status)
                     </span>
                     <span class="text-muted"> • </span>
                     <span>@fc.StartTime.ToString("dd.MM HH:mm")</span>
