@@ -1,19 +1,17 @@
-using Gym.Data.Data;
 using Gym.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Gym.Web.Controllers
 {
     public class PageController : Controller
     {
-        private readonly GymContext _context;
         private readonly IParameterService _parameterService;
+        private readonly IPortalPageService _portalPageService;
 
-        public PageController(GymContext context, IParameterService parameterService)
+        public PageController(IParameterService parameterService, IPortalPageService portalPageService)
         {
-            _context = context;
             _parameterService = parameterService;
+            _portalPageService = portalPageService;
         }
 
         [HttpGet("page/{slug}")]
@@ -24,19 +22,14 @@ namespace Gym.Web.Controllers
                 return NotFound();
             }
 
-            var page = await _context.PortalPage
-                .Where(p => p.IsPublished)
-                .FirstOrDefaultAsync(p => p.Slug == slug);
+            var page = await _portalPageService.GetPublishedPortalPageBySlugAsync(slug);
 
             if (page == null)
             {
                 return NotFound();
             }
 
-            ViewBag.PageModel = await _context.PortalPage
-                .Where(p => p.IsPublished)
-                .OrderBy(p => p.Id)
-                .ToListAsync();
+            ViewBag.PageModel = await _portalPageService.GetPublishedPortalPagesAsync();
 
             ViewBag.Parameters = await _parameterService.GetAllActiveParametersAsync();
 

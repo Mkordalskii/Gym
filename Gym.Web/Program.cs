@@ -10,6 +10,7 @@ builder.Services.AddDbContext<GymContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IParameterService, ParameterService>();
+builder.Services.AddScoped<IPortalPageService, PortalPageService>();
 
 var app = builder.Build();
 
