@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Gym.Data.Data;
+using Gym.Data.Models.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Gym.Data.Models.Core;
-using Gym.Data.Data;
 
 namespace Gym.Admin.Controllers
 {
@@ -49,7 +45,7 @@ namespace Gym.Admin.Controllers
         // GET: Bookings/Create
         public IActionResult Create()
         {
-            ViewData["FitnessClassId"] = new SelectList(_context.Set<FitnessClass>(), "Id", "Room");
+            ViewData["FitnessClassId"] = new SelectList(_context.Set<FitnessClass>(), "Id", "Title");
             ViewData["MemberId"] = new SelectList(_context.Set<Member>(), "Id", "Email");
             return View();
         }
@@ -73,7 +69,7 @@ namespace Gym.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FitnessClassId"] = new SelectList(_context.Set<FitnessClass>(), "Id", "Room", booking.FitnessClassId);
+            ViewData["FitnessClassId"] = new SelectList(_context.Set<FitnessClass>(), "Id", "Title", booking.FitnessClassId);
             ViewData["MemberId"] = new SelectList(_context.Set<Member>(), "Id", "Email", booking.MemberId);
             return View(booking);
         }

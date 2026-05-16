@@ -13,6 +13,7 @@ namespace Gym.Data.Data
             await SeedParameterCategoriesAsync(context);
             await SeedParametersAsync(context);
             await SeedMembershipPlansAsync(context);
+            await SeedMemberAsync(context);
             await SeedAnnouncementsAsync(context);
             await SeedPortalPagesAsync(context);
         }
@@ -153,6 +154,29 @@ namespace Gym.Data.Data
                     context.Parameter.Add(parameter);
                 }
             }
+
+            await context.SaveChangesAsync();
+        }
+
+        private static async Task SeedMemberAsync(GymContext context)
+        {
+            if (await context.Member.AnyAsync())
+            {
+                return;
+            }
+
+            var now = DateTime.UtcNow;
+            context.Member.Add(new Member
+            {
+                FirstName = "Demo",
+                LastName = "User",
+                Email = "demo@gym.local",
+                PhoneNumber = null,
+                DateOfBirth = new DateTime(1990, 1, 1),
+                IsActive = true,
+                CreatedAt = now,
+                CreatedBy = "Seeder"
+            });
 
             await context.SaveChangesAsync();
         }

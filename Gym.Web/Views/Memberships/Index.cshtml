@@ -1,0 +1,65 @@
+@model IEnumerable<Gym.Data.Models.Core.Membership>
+
+@{
+    var parameters = ViewBag.Parameters as Dictionary<string, string> ?? new Dictionary<string, string>();
+
+    string GetText(string key, string fallback)
+    {
+        return parameters.ContainsKey(key) ? parameters[key] : fallback;
+    }
+
+    ViewData["Title"] = GetText("Memberships.Title", "My memberships");
+}
+
+<section class="container my-5 pb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">@GetText("Memberships.Title", "My memberships")</h1>
+        <a asp-controller="MembershipPlans" asp-action="Index" class="btn btn-outline-primary btn-sm">
+            @GetText("Memberships.ChoosePlan", "Choose plan")
+        </a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    @if (Model.Any())
+    {
+        <div class="row g-3">
+            @foreach (var membership in Model)
+            {
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="mb-2">@(membership.MembershipPlan?.Name ?? "—")</h5>
+                            <p class="mb-1">
+                                <strong>@GetText("Memberships.Status", "Status"):</strong>
+                                @membership.Status
+                            </p>
+                            <p class="mb-1">
+                                <strong>@GetText("Memberships.StartDate", "Start"):</strong>
+                                @membership.StartDate.ToString("dd.MM.yyyy")
+                            </p>
+                            <p class="mb-0">
+                                <strong>@GetText("Memberships.EndDate", "Expires"):</strong>
+                                @membership.EndDate.ToString("dd.MM.yyyy")
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info mb-0">
+            @GetText("Memberships.Empty", "No memberships yet. Choose a plan to get started.")
+        </div>
+    }
+</section>
