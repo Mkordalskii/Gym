@@ -1,0 +1,12 @@
+<script>
+    (function () {
+        const selectAll = document.getElementById('selectAll');
+        if (!selectAll) return;
+
+        selectAll.addEventListener('change', function () {
+            document.querySelectorAll('.bulk-select').forEach(function (cb) {
+                cb.checked = selectAll.checked;
+            });
+        });
+    })();
+</script>

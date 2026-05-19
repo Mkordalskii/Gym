@@ -1,4 +1,5 @@
-﻿using Gym.Data.Data;
+﻿using Gym.Admin.Extensions;
+using Gym.Data.Data;
 using Gym.Data.Models.Cms;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -145,6 +146,14 @@ namespace Gym.Admin.Controllers
             }
 
             return View(parameterCategory);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteSelected(int[] ids)
+        {
+            await _context.SoftDeleteByIdsAsync(_context.ParameterCategory, ids, User.Identity?.Name);
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: ParameterCategories/Delete/5

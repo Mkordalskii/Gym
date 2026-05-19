@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Gym.Admin.Extensions;
 using Gym.Data.Models.Core;
 using Gym.Data.Data;
 
@@ -151,6 +152,14 @@ namespace Gym.Admin.Controllers
             announcement.DeletedAt = DateTime.UtcNow;
             announcement.DeletedBy = User.Identity?.Name ?? "Admin";
             return View(announcement);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteSelected(int[] ids)
+        {
+            await _context.SoftDeleteByIdsAsync(_context.Announcement, ids, User.Identity?.Name);
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Announcements/Delete/5

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Gym.Admin.Extensions;
 using Gym.Data.Models.Cms;
 using Gym.Data.Data;
 
@@ -153,6 +154,14 @@ namespace Gym.Admin.Controllers
             }
 
             return View(portalPage);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteSelected(int[] ids)
+        {
+            await _context.SoftDeleteByIdsAsync(_context.PortalPage, ids, User.Identity?.Name);
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: PortalPages/Delete/5

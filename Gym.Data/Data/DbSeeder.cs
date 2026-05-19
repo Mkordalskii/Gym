@@ -29,7 +29,8 @@ namespace Gym.Data.Data
                 new ParameterCategory { Name = "MembershipPlans", Description = "Texts used in membership plans section", IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
                 new ParameterCategory { Name = "Dashboard", Description = "Texts used in dashboard cards", IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
                 new ParameterCategory { Name = "Admin.Dashboard", Description = "Texts used in admindashboard cards", IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
-                new ParameterCategory { Name = "Bookings", Description = "Texts used in bookings pages", IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" }
+                new ParameterCategory { Name = "Bookings", Description = "Texts used in bookings pages", IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
+                new ParameterCategory { Name = "Portal", Description = "Portal theme and CSS values for Gym.Web", IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" }
             };
 
             foreach (var category in categories)
@@ -54,7 +55,8 @@ namespace Gym.Data.Data
                 !categories.TryGetValue("MembershipPlans", out var membershipPlansCategoryId) ||
                 !categories.TryGetValue("Dashboard", out var dashboardCategoryId) ||
                 !categories.TryGetValue("Admin.Dashboard", out var adminDashboardCategoryId) ||
-                !categories.TryGetValue("Bookings", out var bookingsCategoryId))
+                !categories.TryGetValue("Bookings", out var bookingsCategoryId) ||
+                !categories.TryGetValue("Portal", out var portalCategoryId))
             {
                 return;
             }
@@ -69,7 +71,7 @@ namespace Gym.Data.Data
                 new Parameter { Name = "Home.HeroSubtitle", Value = "Manage your membership, browse the schedule, and book classes in seconds.", Description = "Main hero subtitle", ParameterCategoryId = homePageCategoryId, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
                 new Parameter { Name = "Home.HeroPrimaryButton", Value = "View schedule", Description = "Primary hero button label", ParameterCategoryId = homePageCategoryId, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
                 new Parameter { Name = "Home.HeroSecondaryButton", Value = "Membership plans", Description = "Secondary hero button label", ParameterCategoryId = homePageCategoryId, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
-                new Parameter { Name = "Home.HeroTertiaryButton", Value = "My dashboard", Description = "Tertiary hero button label", ParameterCategoryId = homePageCategoryId, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
+                new Parameter { Name = "Home.HeroTertiaryButton", Value = "My Bookings", Description = "Tertiary hero button label", ParameterCategoryId = homePageCategoryId, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
                 new Parameter { Name = "Home.HeroTip", Value = "Tip: booking requires an active membership.", Description = "Hero tip text", ParameterCategoryId = homePageCategoryId, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
                 new Parameter { Name = "Home.NextClassesTitle", Value = "Next classes (today)", Description = "Card title with next classes", ParameterCategoryId = homePageCategoryId, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
                 new Parameter { Name = "Home.NextClassesBadge", Value = "Live", Description = "Badge in next classes card", ParameterCategoryId = homePageCategoryId, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
@@ -142,6 +144,11 @@ namespace Gym.Data.Data
                 new Parameter { Name = "Bookings.Cancel", Value = "Cancel", ParameterCategoryId = bookingsCategoryId, IsActive = true, CreatedAt = now, CreatedBy = "Seeder" },
                 new Parameter { Name = "Bookings.NoAction", Value = "No action", ParameterCategoryId = bookingsCategoryId, IsActive = true, CreatedAt = now, CreatedBy = "Seeder" },
                 new Parameter { Name = "Bookings.Empty", Value = "You have no bookings yet.", ParameterCategoryId = bookingsCategoryId, IsActive = true, CreatedAt = now, CreatedBy = "Seeder" },
+                // portal theme (CSS values editable in Gym.Admin)
+                new Parameter { Name = "Portal.PrimaryColor", Value = "#2563eb", Description = "Primary brand color (hex)", ParameterCategoryId = portalCategoryId, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
+                new Parameter { Name = "Portal.SecondaryColor", Value = "#1e3a8a", Description = "Secondary brand color (hex)", ParameterCategoryId = portalCategoryId, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
+                new Parameter { Name = "Portal.HeroBackground", Value = "radial-gradient(circle at top right, #dbeafe, #f6f9ff 50%)", Description = "Hero section background (CSS)", ParameterCategoryId = portalCategoryId, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
+                new Parameter { Name = "Portal.ButtonRadius", Value = "1rem", Description = "Border radius for buttons and cards (CSS)", ParameterCategoryId = portalCategoryId, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
                 // footer
                 new Parameter { Name = "Footer.Copyright", Value = "2026 Gym.Web - Customer Web Portal", Description = "Footer copyright text", ParameterCategoryId = footerCategoryId, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" },
                 new Parameter { Name = "Footer.PrivacyPolicy", Value = "Privacy policy", Description = "Footer privacy policy link label", ParameterCategoryId = footerCategoryId, IsActive = true, CreatedAt = now, CreatedBy = "Seeder", ModifiedAt = now, ModifiedBy = "Seeder" }

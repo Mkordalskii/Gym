@@ -8,19 +8,32 @@ body {
 }
 
 .web-navbar {
-    background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%);
+    background: linear-gradient(90deg, var(--portal-secondary), var(--portal-primary));
 }
 
 .hero-section {
-    background: radial-gradient(circle at top right, #dbeafe, #f6f9ff 50%);
+    background: var(--portal-hero-background);
 }
 
 .hero-card {
-    border-radius: 1rem;
+    border-radius: var(--portal-button-radius);
 }
 
 .card {
-    border-radius: 1rem;
+    border-radius: var(--portal-button-radius);
+}
+
+.btn {
+    border-radius: var(--portal-button-radius);
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--portal-primary);
+    --bs-btn-border-color: var(--portal-primary);
+    --bs-btn-hover-bg: var(--portal-secondary);
+    --bs-btn-hover-border-color: var(--portal-secondary);
+    --bs-btn-active-bg: var(--portal-secondary);
+    --bs-btn-active-border-color: var(--portal-secondary);
 }
 
 .web-footer {

@@ -1,0 +1,13 @@
+@model Dictionary<string, string>
+@{
+    string GetText(string key, string fallback) =>
+        Model.TryGetValue(key, out var value) && !string.IsNullOrWhiteSpace(value) ? value : fallback;
+}
+<style>
+    :root {
+        --portal-primary: @GetText("Portal.PrimaryColor", "#2563eb");
+        --portal-secondary: @GetText("Portal.SecondaryColor", "#1e3a8a");
+        --portal-hero-background: @GetText("Portal.HeroBackground", "radial-gradient(circle at top right, #dbeafe, #f6f9ff 50%)");
+        --portal-button-radius: @GetText("Portal.ButtonRadius", "1rem");
+    }
+</style>
