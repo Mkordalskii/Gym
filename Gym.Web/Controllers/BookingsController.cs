@@ -8,11 +8,13 @@ namespace Gym.Web.Controllers
         private readonly IBookingService _bookingService;
         private readonly IParameterService _parameterService;
         private readonly IPortalPageService _portalPageService;
-        public BookingsController(IBookingService bookingService, IParameterService parameterService, IPortalPageService portalPageService)
+        private readonly IBookingPdfService _bookingPdfService;
+        public BookingsController(IBookingService bookingService, IParameterService parameterService, IPortalPageService portalPageService, IBookingPdfService bookingPdfService)
         {
             _bookingService = bookingService;
             _parameterService = parameterService;
             _portalPageService = portalPageService;
+            _bookingPdfService = bookingPdfService;
         }
         public async Task<IActionResult> Index()
         {
@@ -62,6 +64,16 @@ namespace Gym.Web.Controllers
                 default:
                     return RedirectToAction(nameof(Index));
             }
+        }
+        public async Task<IActionResult> DownloadConfirmation(int id) //metoda do pobrania pdf z potwierdzeniem rezerwacji
+        {
+            var pdf = await _bookingPdfService.GenerateConfirmationPdfAsync(id);
+
+            return File(
+                pdf,
+                "application/pdf",
+                $"booking-confirmation-{id}.pdf"
+            );
         }
     }
 }

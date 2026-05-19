@@ -59,11 +59,24 @@
                                     </span>
                                 </td>
                                 <td class="text-end">
+                                    <a asp-controller="Bookings"
+                                       asp-action="DownloadConfirmation"
+                                       asp-route-id="@booking.Id"
+                                       class="btn btn-outline-primary btn-sm">
+                                        PDF
+                                    </a>
+
                                     @if (canCancel)
                                     {
-                                        <form asp-controller="Bookings" asp-action="Cancel" method="post" class="d-inline">
+                                        <form asp-controller="Bookings"
+                                              asp-action="Cancel"
+                                              method="post"
+                                              class="d-inline">
+
                                             <input type="hidden" name="id" value="@booking.Id" />
-                                            <button type="submit" class="btn btn-outline-danger btn-sm">
+
+                                            <button type="submit"
+                                                    class="btn btn-outline-danger btn-sm">
                                                 @GetText("Bookings.Cancel", "Cancel")
                                             </button>
                                         </form>

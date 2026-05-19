@@ -16,6 +16,7 @@ builder.Services.AddScoped<IFitnessClassService, FitnessClassService>();
 builder.Services.AddScoped<IMembershipPlanService, MembershipPlanService>();
 builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
 builder.Services.AddScoped<IMembershipService, MembershipService>();
+builder.Services.AddScoped<IBookingPdfService, BookingPdfService>();
 
 var app = builder.Build();
 

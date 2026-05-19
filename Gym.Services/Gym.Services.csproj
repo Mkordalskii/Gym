@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="QuestPDF" Version="2026.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Gym.Data\Gym.Data.csproj" />
     <ProjectReference Include="..\Gym.Interfaces\Gym.Interfaces.csproj" />
   </ItemGroup>
